@@ -1,250 +1,236 @@
-"""Valida localmente os resultados do MVP com os CSVs oficiais da ANP."""
+"""Validação local e geração das evidências do MVP CISA KEV + NVD."""
 
 from __future__ import annotations
 
-import hashlib
 import json
-import unicodedata
 from pathlib import Path
 
 import matplotlib
+import pandas as pd
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[1]
-RAW_DIR = ROOT / "data" / "raw"
-RESULTS_DIR = ROOT / "resultados"
-EVIDENCE_DIR = ROOT / "evidencias"
-
-USECOLS = [
-    "Regiao - Sigla",
-    "Estado - Sigla",
-    "Municipio",
-    "CNPJ da Revenda",
-    "Produto",
-    "Data da Coleta",
-    "Valor de Venda",
-    "Valor de Compra",
-    "Unidade de Medida",
-    "Bandeira",
-]
+RAW = ROOT / "data" / "raw"
+RESULTS = ROOT / "resultados"
+EVIDENCE = ROOT / "evidencias"
+RESULTS.mkdir(exist_ok=True)
+EVIDENCE.mkdir(exist_ok=True)
 
 
-def strip_accents(value: str) -> str:
-    return "".join(
-        char
-        for char in unicodedata.normalize("NFKD", value)
-        if not unicodedata.combining(char)
-    )
+def select_cvss(metrics: dict) -> tuple[float | None, str | None, str | None]:
+    """Seleciona a versão CVSS mais recente disponível no registro NVD."""
+    for key, version in (
+        ("cvssMetricV40", "4.0"),
+        ("cvssMetricV31", "3.1"),
+        ("cvssMetricV30", "3.0"),
+        ("cvssMetricV2", "2.0"),
+    ):
+        entries = metrics.get(key) or []
+        if not entries:
+            continue
+        primary = next((item for item in entries if item.get("type") == "Primary"), entries[0])
+        cvss = primary.get("cvssData", {})
+        score = cvss.get("baseScore")
+        severity = cvss.get("baseSeverity") or primary.get("baseSeverity")
+        return score, severity, version
+    return None, None, None
 
 
-def station_hash(value: object) -> str | None:
-    if pd.isna(value):
-        return None
-    return hashlib.sha256(str(value).encode("utf-8")).hexdigest()[:16]
-
-
-def load_data() -> pd.DataFrame:
-    parts: list[pd.DataFrame] = []
-    for path in sorted(RAW_DIR.rglob("*.csv")):
-        for chunk in pd.read_csv(
-            path,
-            sep=";",
-            encoding="utf-8-sig",
-            usecols=USECOLS,
-            dtype=str,
-            chunksize=200_000,
-            low_memory=False,
-        ):
-            parts.append(chunk)
-    if not parts:
-        raise FileNotFoundError("Nenhum CSV da ANP encontrado em data/raw")
-    return pd.concat(parts, ignore_index=True)
-
-
-def clean_data(raw: pd.DataFrame) -> pd.DataFrame:
-    df = raw.rename(
-        columns={
-            "Regiao - Sigla": "regiao",
-            "Estado - Sigla": "uf",
-            "Municipio": "municipio",
-            "CNPJ da Revenda": "cnpj_revenda",
-            "Produto": "produto",
-            "Data da Coleta": "data_coleta",
-            "Valor de Venda": "valor_venda",
-            "Valor de Compra": "valor_compra",
-            "Unidade de Medida": "unidade_medida",
-            "Bandeira": "bandeira",
-        }
-    )
-    for col in ["regiao", "uf", "municipio", "produto", "unidade_medida", "bandeira"]:
-        df[col] = df[col].str.strip().str.upper()
-    df["produto"] = df["produto"].map(lambda x: strip_accents(x) if isinstance(x, str) else x)
-    df["data_coleta"] = pd.to_datetime(df["data_coleta"], format="%d/%m/%Y", errors="coerce")
-    for col in ["valor_venda", "valor_compra"]:
-        df[col] = pd.to_numeric(df[col].str.replace(",", ".", regex=False), errors="coerce")
-    df["posto_id"] = df["cnpj_revenda"].map(station_hash)
-    df = df.drop(columns=["cnpj_revenda"])
-    df = df[df["produto"].isin(["GASOLINA", "ETANOL"])].copy()
-    df["ano"] = df["data_coleta"].dt.year
-    df["mes"] = df["data_coleta"].dt.to_period("M").astype(str)
-    return df
-
-
-def quality_report(df: pd.DataFrame) -> pd.DataFrame:
-    rows = []
-    domains = {
-        "regiao": "N, NE, CO, SE, S",
-        "uf": "27 UFs brasileiras",
-        "municipio": "texto não vazio",
-        "produto": "GASOLINA ou ETANOL",
-        "data_coleta": "2024-01-01 a 2025-12-31",
-        "valor_venda": "> 0 e < 20 R$/litro",
-        "valor_compra": "> 0 e < 20 R$/litro; ausência permitida",
-        "unidade_medida": "R$ / litro",
-        "bandeira": "texto não vazio; ausência permitida",
-        "posto_id": "hash SHA-256 truncado de 16 caracteres",
-        "ano": "2024 ou 2025",
-        "mes": "AAAA-MM",
-    }
-    for col in df.columns:
-        series = df[col]
-        rows.append(
-            {
-                "atributo": col,
-                "tipo": str(series.dtype),
-                "linhas": len(df),
-                "nulos": int(series.isna().sum()),
-                "percentual_nulos": round(series.isna().mean() * 100, 4),
-                "distintos": int(series.nunique(dropna=True)),
-                "minimo": str(series.min()) if series.notna().any() else "",
-                "maximo": str(series.max()) if series.notna().any() else "",
-                "dominio_esperado": domains.get(col, ""),
-            }
-        )
-    return pd.DataFrame(rows)
-
-
-def analyze(df: pd.DataFrame) -> dict[str, object]:
-    valid = df[
-        df["data_coleta"].notna()
-        & df["valor_venda"].between(0.5, 20)
-        & df["uf"].str.fullmatch(r"[A-Z]{2}", na=False)
-    ].drop_duplicates(
-        subset=["posto_id", "produto", "data_coleta", "valor_venda"]
-    )
-
-    state_2025 = (
-        valid[valid["ano"] == 2025]
-        .groupby(["uf", "produto"], as_index=False)
-        .agg(preco_medio=("valor_venda", "mean"), mediana=("valor_venda", "median"),
-             desvio_padrao=("valor_venda", "std"), observacoes=("valor_venda", "size"))
-    )
-    state_2025[["preco_medio", "mediana", "desvio_padrao"]] = state_2025[
-        ["preco_medio", "mediana", "desvio_padrao"]
-    ].round(3)
-    state_2025.to_csv(RESULTS_DIR / "precos_estaduais_2025.csv", index=False)
-
-    monthly = (
-        valid.groupby(["mes", "produto"], as_index=False)
-        .agg(preco_medio=("valor_venda", "mean"), observacoes=("valor_venda", "size"))
-    )
-    monthly["preco_medio"] = monthly["preco_medio"].round(3)
-    monthly.to_csv(RESULTS_DIR / "evolucao_mensal_2024_2025.csv", index=False)
-
-    pivot = (
-        valid.groupby(["uf", "mes", "produto"], as_index=False)["valor_venda"]
-        .mean()
-        .pivot(index=["uf", "mes"], columns="produto", values="valor_venda")
-        .reset_index()
-    )
-    pivot = pivot.dropna(subset=["GASOLINA", "ETANOL"])
-    pivot["razao_etanol_gasolina"] = pivot["ETANOL"] / pivot["GASOLINA"]
-    competitiveness = (
-        pivot.assign(competitivo=lambda x: x["razao_etanol_gasolina"] <= 0.70)
-        .groupby("uf", as_index=False)
-        .agg(
-            meses_analisados=("mes", "size"),
-            meses_etanol_competitivo=("competitivo", "sum"),
-            razao_media=("razao_etanol_gasolina", "mean"),
-        )
-    )
-    competitiveness["percentual_meses_competitivo"] = (
-        competitiveness["meses_etanol_competitivo"] / competitiveness["meses_analisados"] * 100
-    ).round(1)
-    competitiveness["razao_media"] = competitiveness["razao_media"].round(3)
-    competitiveness.sort_values(
-        ["percentual_meses_competitivo", "razao_media"], ascending=[False, True]
-    ).to_csv(RESULTS_DIR / "competitividade_etanol.csv", index=False)
-
-    dispersion = (
-        valid.groupby(["uf", "produto"], as_index=False)
-        .agg(media=("valor_venda", "mean"), desvio=("valor_venda", "std"),
-             amplitude=("valor_venda", lambda x: x.quantile(0.95) - x.quantile(0.05)))
-    )
-    dispersion["coeficiente_variacao"] = dispersion["desvio"] / dispersion["media"]
-    dispersion = dispersion.round(3).sort_values("coeficiente_variacao", ascending=False)
-    dispersion.to_csv(RESULTS_DIR / "dispersao_estadual.csv", index=False)
-
-    plt.style.use("seaborn-v0_8-whitegrid")
-    fig, ax = plt.subplots(figsize=(11, 5.5))
-    colors = {"GASOLINA": "#1f4e79", "ETANOL": "#2a9d8f"}
-    for product, group in monthly.groupby("produto"):
-        ax.plot(group["mes"], group["preco_medio"], marker="o", label=product, color=colors.get(product))
-    ax.set(title="Evolução mensal do preço médio de combustíveis (2024-2025)", xlabel="Mês", ylabel="R$/litro")
-    ax.tick_params(axis="x", rotation=60)
-    ax.legend(title="Produto")
-    fig.tight_layout()
-    fig.savefig(EVIDENCE_DIR / "evolucao_mensal.png", dpi=180)
-    plt.close(fig)
-
-    gas = state_2025[state_2025["produto"] == "GASOLINA"].sort_values("preco_medio")
-    fig, ax = plt.subplots(figsize=(11, 7))
-    ax.barh(gas["uf"], gas["preco_medio"], color="#1f4e79")
-    ax.set(title="Preço médio da gasolina por UF em 2025", xlabel="R$/litro", ylabel="UF")
-    fig.tight_layout()
-    fig.savefig(EVIDENCE_DIR / "gasolina_por_uf_2025.png", dpi=180)
-    plt.close(fig)
-
-    duplicate_count = int(df.duplicated(subset=["posto_id", "produto", "data_coleta", "valor_venda"]).sum())
-    out_of_domain = int((~df["valor_venda"].between(0.5, 20) & df["valor_venda"].notna()).sum())
-    top_gas = gas.nlargest(3, "preco_medio")[["uf", "preco_medio"]].to_dict("records")
-    low_gas = gas.nsmallest(3, "preco_medio")[["uf", "preco_medio"]].to_dict("records")
-    top_comp = competitiveness.sort_values(
-        ["percentual_meses_competitivo", "razao_media"], ascending=[False, True]
-    ).head(5)[["uf", "percentual_meses_competitivo", "razao_media"]].to_dict("records")
-    top_disp = dispersion.head(5)[["uf", "produto", "coeficiente_variacao"]].to_dict("records")
-
-    summary = {
-        "raw_rows_selected_products": int(len(df)),
-        "valid_rows": int(len(valid)),
-        "duplicate_rows_removed": duplicate_count,
-        "out_of_domain_sale_prices": out_of_domain,
-        "date_min": str(valid["data_coleta"].min().date()),
-        "date_max": str(valid["data_coleta"].max().date()),
-        "states": int(valid["uf"].nunique()),
-        "municipalities": int(valid["municipio"].nunique()),
-        "top_gasoline_2025": top_gas,
-        "lowest_gasoline_2025": low_gas,
-        "best_ethanol_competitiveness": top_comp,
-        "highest_dispersion": top_disp,
-    }
-    (RESULTS_DIR / "resumo.json").write_text(
-        json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    return summary
+def nvd_weaknesses(cve: dict) -> list[str]:
+    values: list[str] = []
+    for item in cve.get("weaknesses", []):
+        for description in item.get("description", []):
+            value = description.get("value")
+            if value and value.startswith("CWE-") and value not in values:
+                values.append(value)
+    return values
 
 
 def main() -> None:
-    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-    EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
-    raw = load_data()
-    clean = clean_data(raw)
-    quality_report(clean).to_csv(EVIDENCE_DIR / "qualidade_por_atributo.csv", index=False)
-    summary = analyze(clean)
+    cisa = json.loads((RAW / "cisa_kev.json").read_text(encoding="utf-8"))
+    nvd = json.loads((RAW / "nvd_kev.json").read_text(encoding="utf-8"))
+
+    cisa_rows = []
+    for item in cisa["vulnerabilities"]:
+        cisa_rows.append(
+            {
+                "cve_id": item.get("cveID"),
+                "fornecedor": item.get("vendorProject"),
+                "produto": item.get("product"),
+                "nome_vulnerabilidade": item.get("vulnerabilityName"),
+                "data_adicao": item.get("dateAdded"),
+                "descricao_cisa": item.get("shortDescription"),
+                "acao_requerida": item.get("requiredAction"),
+                "data_limite": item.get("dueDate"),
+                "uso_ransomware": item.get("knownRansomwareCampaignUse"),
+                "triagem_forense": item.get("forensicTriage"),
+                "notas": item.get("notes"),
+                "cwes_cisa": item.get("cwes") or [],
+            }
+        )
+
+    nvd_rows = []
+    for wrapper in nvd["vulnerabilities"]:
+        cve = wrapper["cve"]
+        score, severity, version = select_cvss(cve.get("metrics", {}))
+        nvd_rows.append(
+            {
+                "cve_id": cve.get("id"),
+                "data_publicacao": cve.get("published"),
+                "ultima_modificacao": cve.get("lastModified"),
+                "status_nvd": cve.get("vulnStatus"),
+                "cvss_score": score,
+                "cvss_severidade": severity,
+                "cvss_versao": version,
+                "cwes_nvd": nvd_weaknesses(cve),
+            }
+        )
+
+    cisa_df = pd.DataFrame(cisa_rows)
+    nvd_df = pd.DataFrame(nvd_rows)
+    merged = cisa_df.merge(nvd_df, on="cve_id", how="outer", indicator=True)
+
+    merged["data_adicao"] = pd.to_datetime(merged["data_adicao"], errors="coerce")
+    merged["data_limite"] = pd.to_datetime(merged["data_limite"], errors="coerce")
+    merged["data_publicacao"] = pd.to_datetime(merged["data_publicacao"], errors="coerce", utc=True).dt.tz_localize(None)
+    merged["ultima_modificacao"] = pd.to_datetime(merged["ultima_modificacao"], errors="coerce", utc=True).dt.tz_localize(None)
+    merged["cwes"] = merged.apply(
+        lambda row: row["cwes_nvd"] if isinstance(row["cwes_nvd"], list) and row["cwes_nvd"] else row["cwes_cisa"],
+        axis=1,
+    )
+    merged["cwes_texto"] = merged["cwes"].apply(lambda value: "|".join(value) if isinstance(value, list) else "")
+    merged["dias_publicacao_ate_kev"] = (merged["data_adicao"] - merged["data_publicacao"]).dt.days
+    merged["janela_correcao_dias"] = (merged["data_limite"] - merged["data_adicao"]).dt.days
+    merged["ano_adicao"] = merged["data_adicao"].dt.year.astype("Int64")
+    merged["mes_adicao"] = merged["data_adicao"].dt.to_period("M").astype(str)
+    merged["ano_cve"] = pd.to_numeric(merged["cve_id"].str.extract(r"CVE-(\d{4})-")[0], errors="coerce").astype("Int64")
+    merged["ransomware_confirmado"] = merged["uso_ransomware"].str.upper().eq("KNOWN")
+    merged["prioridade"] = pd.cut(
+        merged["cvss_score"], bins=[-0.01, 3.9, 6.9, 8.9, 10], labels=["BAIXA", "MEDIA", "ALTA", "CRITICA"]
+    ).astype("string")
+
+    export_cols = [
+        "cve_id", "fornecedor", "produto", "nome_vulnerabilidade", "data_publicacao", "data_adicao",
+        "data_limite", "dias_publicacao_ate_kev", "janela_correcao_dias", "cvss_score", "cvss_severidade",
+        "cvss_versao", "prioridade", "uso_ransomware", "ransomware_confirmado", "triagem_forense",
+        "cwes_texto", "status_nvd", "descricao_cisa", "acao_requerida", "notas",
+    ]
+    merged[export_cols].to_csv(RESULTS / "vulnerabilidades_enriquecidas.csv", index=False, date_format="%Y-%m-%d")
+
+    fornecedores = (
+        merged.groupby("fornecedor", dropna=False)
+        .agg(
+            vulnerabilidades=("cve_id", "count"), produtos=("produto", "nunique"),
+            cvss_medio=("cvss_score", "mean"), ransomware_confirmado=("ransomware_confirmado", "sum"),
+            mediana_dias_ate_kev=("dias_publicacao_ate_kev", "median"),
+        )
+        .reset_index().sort_values(["vulnerabilidades", "fornecedor"], ascending=[False, True])
+    )
+    fornecedores["cvss_medio"] = fornecedores["cvss_medio"].round(2)
+    fornecedores.to_csv(RESULTS / "fornecedores.csv", index=False)
+
+    produtos = (
+        merged.groupby(["fornecedor", "produto"], dropna=False)
+        .agg(vulnerabilidades=("cve_id", "count"), ransomware_confirmado=("ransomware_confirmado", "sum"))
+        .reset_index().sort_values(["vulnerabilidades", "fornecedor", "produto"], ascending=[False, True, True])
+    )
+    produtos.to_csv(RESULTS / "produtos.csv", index=False)
+
+    temporal = (
+        merged.groupby("mes_adicao")
+        .agg(vulnerabilidades_adicionadas=("cve_id", "count"), ransomware_confirmado=("ransomware_confirmado", "sum"))
+        .reset_index().sort_values("mes_adicao")
+    )
+    temporal.to_csv(RESULTS / "evolucao_temporal.csv", index=False)
+
+    cwes = merged[["cve_id", "fornecedor", "ransomware_confirmado", "cwes"]].explode("cwes")
+    cwes = cwes[cwes["cwes"].notna() & cwes["cwes"].ne("")]
+    cwe_summary = (
+        cwes.groupby("cwes")
+        .agg(vulnerabilidades=("cve_id", "nunique"), ransomware_confirmado=("ransomware_confirmado", "sum"))
+        .reset_index().sort_values(["vulnerabilidades", "cwes"], ascending=[False, True])
+    )
+    cwe_summary.to_csv(RESULTS / "fraquezas_cwe.csv", index=False)
+
+    merged[merged["ransomware_confirmado"]].sort_values(
+        ["cvss_score", "data_adicao"], ascending=[False, False]
+    )[export_cols].to_csv(RESULTS / "vulnerabilidades_ransomware.csv", index=False, date_format="%Y-%m-%d")
+
+    quality_rows = []
+    quality_cols = [
+        "cve_id", "fornecedor", "produto", "data_publicacao", "data_adicao", "data_limite", "cvss_score",
+        "cvss_severidade", "cwes_texto", "uso_ransomware", "triagem_forense", "status_nvd",
+        "dias_publicacao_ate_kev", "janela_correcao_dias",
+    ]
+    for col in quality_cols:
+        series = merged[col]
+        non_null = series.dropna()
+        quality_rows.append({
+            "atributo": col, "tipo": str(series.dtype), "linhas": len(series),
+            "nulos": int(series.isna().sum()), "percentual_nulos": round(series.isna().mean() * 100, 2),
+            "distintos": int(non_null.astype(str).nunique()),
+            "minimo": str(non_null.min()) if len(non_null) else None,
+            "maximo": str(non_null.max()) if len(non_null) else None,
+        })
+    pd.DataFrame(quality_rows).to_csv(EVIDENCE / "qualidade_por_atributo.csv", index=False)
+
+    delay_non_negative = merged.loc[merged["dias_publicacao_ate_kev"] >= 0, "dias_publicacao_ate_kev"]
+    summary = {
+        "catalogo_cisa": cisa.get("catalogVersion"), "data_catalogo": cisa.get("dateReleased"),
+        "registros_cisa": len(cisa_df), "registros_nvd": len(nvd_df), "registros_integrados": len(merged),
+        "correspondencias_ambas_fontes": int((merged["_merge"] == "both").sum()),
+        "cves_duplicados_cisa": int(cisa_df["cve_id"].duplicated().sum()),
+        "cves_duplicados_nvd": int(nvd_df["cve_id"].duplicated().sum()),
+        "fornecedores": int(merged["fornecedor"].nunique()),
+        "produtos": int(merged[["fornecedor", "produto"]].drop_duplicates().shape[0]),
+        "cves_ransomware_confirmado": int(merged["ransomware_confirmado"].sum()),
+        "percentual_ransomware_confirmado": round(merged["ransomware_confirmado"].mean() * 100, 2),
+        "cvss_ausente": int(merged["cvss_score"].isna().sum()), "cwe_ausente": int(merged["cwes_texto"].eq("").sum()),
+        "atrasos_negativos": int((merged["dias_publicacao_ate_kev"] < 0).sum()),
+        "mediana_dias_publicacao_ate_kev": float(delay_non_negative.median()),
+        "media_dias_publicacao_ate_kev": round(float(delay_non_negative.mean()), 1),
+        "mediana_janela_correcao_dias": float(merged["janela_correcao_dias"].median()),
+        "cvss_medio": round(float(merged["cvss_score"].mean()), 2),
+        "inicio_adicoes": merged["data_adicao"].min().strftime("%Y-%m-%d"),
+        "fim_adicoes": merged["data_adicao"].max().strftime("%Y-%m-%d"),
+    }
+    (RESULTS / "resumo.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    plt.style.use("seaborn-v0_8-whitegrid")
+    top = fornecedores.head(15).sort_values("vulnerabilidades")
+    fig, ax = plt.subplots(figsize=(10, 7))
+    ax.barh(top["fornecedor"], top["vulnerabilidades"], color="#2457a7")
+    ax.set_title("Fornecedores com mais vulnerabilidades exploradas no CISA KEV")
+    ax.set_xlabel("Quantidade de CVEs"); ax.set_ylabel("")
+    for idx, value in enumerate(top["vulnerabilidades"]): ax.text(value + 2, idx, str(value), va="center", fontsize=9)
+    fig.tight_layout(); fig.savefig(EVIDENCE / "top_fornecedores.png", dpi=180); plt.close(fig)
+
+    annual = merged.groupby("ano_adicao").size().reset_index(name="vulnerabilidades")
+    fig, ax = plt.subplots(figsize=(10, 5.5))
+    ax.bar(annual["ano_adicao"].astype(str), annual["vulnerabilidades"], color="#c2413b")
+    ax.set_title("Vulnerabilidades adicionadas ao catálogo KEV por ano")
+    ax.set_xlabel("Ano de inclusão no catálogo"); ax.set_ylabel("Quantidade de CVEs")
+    for idx, value in enumerate(annual["vulnerabilidades"]): ax.text(idx, value + max(annual["vulnerabilidades"]) * 0.015, str(value), ha="center", fontsize=9)
+    fig.tight_layout(); fig.savefig(EVIDENCE / "evolucao_anual_kev.png", dpi=180); plt.close(fig)
+
+    sev = merged.assign(
+        severidade=merged["cvss_severidade"].fillna("SEM CVSS"),
+        grupo_ransomware=merged["ransomware_confirmado"].map({True: "Ransomware conhecido", False: "Sem confirmação"}),
+    )
+    order = ["CRITICAL", "HIGH", "MEDIUM", "LOW", "SEM CVSS"]
+    pivot = sev.pivot_table(index="severidade", columns="grupo_ransomware", values="cve_id", aggfunc="count", fill_value=0).reindex(order).fillna(0)
+    fig, ax = plt.subplots(figsize=(10, 5.5))
+    pivot.plot(kind="bar", stacked=True, color=["#2457a7", "#f59e0b"], ax=ax)
+    ax.set_title("Severidade CVSS e uso conhecido em campanhas de ransomware")
+    ax.set_xlabel("Severidade"); ax.set_ylabel("Quantidade de CVEs"); ax.tick_params(axis="x", rotation=0); ax.legend(title="")
+    fig.tight_layout(); fig.savefig(EVIDENCE / "severidade_ransomware.png", dpi=180); plt.close(fig)
+
     print(json.dumps(summary, ensure_ascii=False, indent=2))
+    print("\nTop 10 fornecedores:\n", fornecedores.head(10).to_string(index=False))
+    print("\nTop 10 CWEs:\n", cwe_summary.head(10).to_string(index=False))
 
 
 if __name__ == "__main__":
