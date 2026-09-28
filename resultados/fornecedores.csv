@@ -1,0 +1,284 @@
+fornecedor,vulnerabilidades,produtos,cvss_medio,ransomware_confirmado,mediana_dias_ate_kev
+Microsoft,389,72,7.9,117,530.0
+Cisco,99,43,8.13,7,1133.0
+Apple,94,9,7.94,0,55.0
+Adobe,82,14,8.75,11,2570.0
+Google,75,25,8.73,0,6.0
+Oracle,46,17,8.82,13,1462.5
+Apache,40,21,9.07,8,467.5
+Ivanti,35,15,8.55,12,26.0
+Linux,31,1,7.65,2,550.0
+Fortinet,30,9,8.78,14,9.0
+Citrix,26,12,8.47,7,46.0
+D-Link,26,21,8.8,2,925.0
+VMware,26,14,8.4,9,80.5
+SonicWall,19,9,8.46,13,196.0
+Synacor,19,4,7.68,6,111.0
+Android,17,6,7.38,0,1.0
+Palo Alto Networks,15,2,8.85,6,11.0
+Samsung,15,2,7.19,0,615.0
+SAP,14,5,8.61,3,1573.5
+Atlassian,13,9,8.95,8,64.0
+Mozilla,13,4,8.72,1,1034.0
+Zyxel,13,7,9.49,2,11.0
+Qualcomm,12,3,7.72,0,-0.5
+Trend Micro,12,9,8.33,0,96.0
+QNAP,11,5,8.91,9,572.0
+Roundcube,11,2,7.4,0,307.0
+SolarWinds,11,4,8.75,2,40.0
+Arm,9,3,7.23,0,161.0
+Progress,9,8,9.69,4,63.0
+Red Hat,9,7,7.74,4,3914.0
+Zoho,9,4,9.1,2,64.0
+F5,8,5,9.55,4,83.0
+IBM,8,6,8.61,2,544.0
+Juniper,8,2,7.16,0,87.0
+NETGEAR,8,7,9.34,0,1841.0
+Mitel,7,4,7.46,5,77.0
+Sophos,7,6,9.8,2,545.0
+Jenkins,6,6,9.45,1,1150.0
+TP-Link,6,5,8.17,0,613.0
+WordPress,6,4,7.87,0,211.0
+Broadcom,5,5,8.82,1,18.0
+Check Point,5,4,9.36,2,-1.0
+DrayTek,5,3,8.3,0,1055.0
+Drupal,5,3,9.26,2,1127.0
+Exim,5,3,9.4,1,1363.0
+GNU,5,4,9.2,0,2681.0
+GitLab,5,4,9.42,1,193.0
+Langflow,5,1,9.34,1,27.0
+MikroTik,5,1,8.76,0,19.0
+N-able,5,2,9.04,0,0.0
+PaperCut,5,2,8.86,2,2.0
+RARLAB,5,2,7.86,4,91.0
+Accellion,4,1,9.3,4,259.0
+ConnectWise,4,1,8.88,2,19.5
+Craft CMS,4,1,8.57,0,98.5
+Fortra,4,2,8.23,2,7.5
+GIGABYTE,4,1,8.3,4,1402.0
+Gladinet,4,3,8.38,0,3.0
+JFrog,4,1,7.85,0,21.5
+JetBrains,4,1,9.18,4,11.0
+Kentico,4,3,9.15,0,300.0
+Nagios,4,1,8.8,0,336.0
+Sangoma,4,3,9.43,0,66.5
+SimpleHelp ,4,1,8.52,3,245.5
+Sitecore,4,3,9.35,1,1132.0
+Ubiquiti,4,2,9.95,0,31.0
+Veeam,4,1,8.98,4,217.0
+WatchGuard,4,3,9.3,1,32.5
+ASUS,3,3,9.3,0,629.0
+Arista,3,2,8.8,0,-1.0
+BerriAI,3,1,8.93,0,30.0
+BeyondTrust,3,3,8.97,1,6.0
+CrushFTP,3,1,9.87,1,3.0
+Dassault Systèmes,3,1,8.7,0,84.0
+DotNetNuke (DNN),3,1,7.93,1,853.0
+Elastic,3,2,9.3,0,2592.0
+ImageMagick,3,1,6.47,0,2007.0
+Kaseya,3,1,9.8,3,1162.0
+Laravel,3,3,9.03,1,978.0
+Meta Platforms,3,1,7.8,0,852.0
+OSGeo,3,2,9.87,0,15.0
+PHP,3,3,9.8,1,3110.0
+Qlik,3,1,8.77,3,99.0
+Rails,3,1,7.5,0,2293.0
+Realtek,3,3,9.8,0,115.0
+SaltStack,3,1,8.7,0,551.0
+SmarterTools,3,1,9.53,3,12.0
+SysAid,3,2,9.03,1,75.0
+TeleMessage,3,1,4.73,0,33.0
+Tenda,3,3,9.8,0,477.0
+TrueConf,3,2,8.87,0,0.0
+VMware Tanzu,3,3,9.03,1,660.0
+Veritas,3,1,8.9,3,766.0
+Acronis,2,2,8.8,0,1.0
+Advantive,2,1,8.15,0,34.0
+Array Networks ,2,2,9.8,1,311.0
+Aviatrix,2,2,9.8,0,66.5
+CWP,2,1,9.4,0,28.0
+Cleo,2,1,9.8,2,24.0
+Commvault,2,2,9.0,0,5.5
+CyberPersons,2,1,9.8,2,21.5
+Dahua,2,1,9.8,0,1070.0
+Dasan,2,1,9.8,1,1426.0
+Dell,2,2,8.9,0,165.0
+EyesOfNetwork,2,1,8.8,0,634.5
+GeoVision,2,1,9.8,0,247.5
+Grafana Labs,2,1,7.4,0,862.0
+Hewlett Packard (HP),2,2,9.8,0,4579.0
+Hikvision,2,2,9.8,0,1666.5
+Hitachi Vantara,2,1,8.5,0,699.0
+IETF,2,2,7.5,0,97.5
+Intel,2,2,8.8,1,1870.5
+LiteSpeed,2,1,9.25,0,2.0
+Metabase,2,1,8.75,0,545.0
+Micro Focus,2,2,8.65,0,244.0
+MinIO,2,1,8.15,0,104.5
+MongoDB,2,2,9.3,0,362.5
+NUUO,2,2,9.8,0,1697.5
+OpenPLC,2,1,7.1,0,1632.5
+PEAR,2,1,7.65,0,613.0
+PTZOptics,2,1,8.15,0,47.0
+Paessler,2,1,8.5,0,2337.0
+Quest,2,2,9.9,1,846.0
+Rejetto,2,2,9.8,1,1381.5
+Reolink,2,2,7.2,0,1567.0
+ServiceNow,2,1,9.25,0,18.0
+Sonatype,2,2,9.3,0,787.0
+Sudo,2,1,7.8,0,262.0
+TIBCO,2,1,7.65,0,1554.0
+Telerik,2,1,9.8,1,1836.0
+ThinkPHP,2,2,9.3,0,1019.5
+Unraid,2,1,8.65,0,596.0
+Versa,2,2,8.2,0,122.5
+WSO2,2,1,9.9,1,27.0
+Wing FTP Server,2,1,7.15,0,125.5
+Zabbix,2,1,7.55,0,39.0
+ownCloud,2,2,8.65,0,508.5
+vBulletin,2,1,9.8,0,608.5
+7-Zip,1,1,7.0,0,11.0
+AMI,1,1,10.0,0,105.0
+Acclaim Systems,1,1,8.1,0,1097.0
+Adminer,1,1,7.2,0,1690.0
+Ajax.NET Professional,1,1,9.8,0,1726.0
+Alcatel,1,1,9.8,0,5322.0
+Amcrest,1,1,8.8,0,573.0
+Aquasecurity,1,1,9.4,0,2.0
+Arcadyan,1,1,9.8,0,187.0
+Arcserve,1,1,9.1,0,2491.0
+Artifex,1,1,7.8,0,1852.0
+Audinate,1,1,7.8,0,811.0
+BQE,1,1,9.8,1,11.0
+Balbooa,1,1,10.0,0,0.0
+Barracuda Networks,1,1,9.8,0,1.0
+Cacti,1,1,9.8,0,72.0
+ChakraCore,1,1,7.5,0,1330.0
+Checkbox,1,1,9.8,0,318.0
+Code Aurora,1,1,8.4,0,2936.0
+Crestron,1,1,9.8,0,1080.0
+D-Link and TRENDnet,1,1,9.8,0,1645.0
+DD-WRT,1,1,8.1,0,4.0
+Daemon,1,1,9.3,0,11.0
+Delta Electronics,1,1,7.8,0,341.0
+Digiever,1,1,8.8,0,321.0
+Docker,1,1,7.8,0,797.0
+Edimax,1,1,9.3,0,13.0
+Embedthis,1,1,8.1,0,1458.0
+Erlang,1,1,10.0,0,53.0
+FXC,1,1,8.8,0,14.0
+FatPipe,1,1,8.8,0,32.0
+ForgeRock,1,1,9.8,1,103.0
+FreeType,1,1,8.1,0,55.0
+Fuel CMS,1,1,9.8,0,483.0
+Git,1,1,8.0,0,47.0
+Gitea,1,1,9.8,0,-2.0
+Gogs,1,1,8.7,0,32.0
+Grandstream,1,1,9.8,0,675.0
+Hewlett Packard Enterprise (HPE),1,1,9.8,0,21.0
+IGEL,1,1,4.6,0,130.0
+Ignite Realtime,1,1,7.5,0,89.0
+InduSoft,1,1,9.8,0,2911.0
+JQuery,1,1,6.1,0,1729.0
+JoomShaper,1,1,10.0,0,16.0
+Joomla!,1,1,5.3,0,325.0
+Joomlack,1,1,10.0,0,7.0
+Justice AV Solutions,1,1,8.7,0,5.0
+KNX Association,1,1,7.5,0,1050.0
+Kestra,1,1,10.0,0,67.0
+Kingsoft,1,1,9.3,0,18.0
+Kludex,1,1,6.5,0,98.0
+LG,1,1,9.8,0,1045.0
+Lantronix,1,1,9.3,0,103.0
+Libraesva,1,1,6.1,0,9.0
+Liferay,1,1,9.8,0,592.0
+Looking Glass,1,1,9.8,0,3019.0
+MDaemon,1,1,5.3,0,184.0
+MLflow,1,1,9.3,0,1.0
+Marimo,1,1,9.3,0,13.0
+McAfee,1,1,7.8,0,265.0
+MediaTek,1,1,7.8,0,602.0
+Meta,1,1,10.0,1,1.0
+Mirasvit,1,1,9.3,0,7.0
+Motex,1,1,9.3,0,1.0
+NAKIVO,1,1,8.6,0,14.0
+Netis,1,1,7.5,0,634.0
+Netwrix,1,1,9.8,1,244.0
+NextGen Healthcare,1,1,9.8,1,206.0
+Nice,1,1,9.8,0,1727.0
+North Grid,1,1,7.5,0,411.0
+Nostromo,1,1,9.8,0,1850.0
+Notepad++,1,1,7.7,0,8.0
+Novi Survey,1,1,9.8,0,1.0
+Npm package,1,1,7.8,0,335.0
+Nx,1,1,9.3,1,-1.0
+October CMS,1,1,9.1,0,144.0
+Omnissa,1,1,7.5,0,1542.0
+OpenBSD,1,1,9.8,0,785.0
+OpenSSL,1,1,7.5,0,2948.0
+PHP Group,1,1,9.8,1,2.0
+PHPUnit,1,1,9.8,0,1693.0
+PTC,1,1,9.3,1,6.0
+Perl,1,1,7.8,0,207.0
+Pi-hole,1,1,7.2,0,559.0
+PlaySMS,1,1,9.8,0,636.0
+Plex,1,1,7.2,0,1035.0
+Prettier,1,1,7.5,0,186.0
+Primetek,1,1,9.8,0,1467.0
+ProjectSend,1,1,9.8,0,6.0
+Pulse Secure,1,1,7.2,0,584.0
+QNAP Systems,1,1,9.8,0,414.0
+Qualitia,1,1,9.8,0,9.0
+Ray-Project,1,1,9.4,0,263.0
+React Native Community,1,1,9.8,0,93.0
+Redis,1,1,10.0,0,37.0
+Rockwell,1,1,9.8,0,1827.0
+Ruckus Wireless,1,1,9.8,0,87.0
+SIMalliance,1,1,9.8,0,782.0
+SKYSEA,1,1,9.8,0,3048.0
+Samba,1,1,9.8,1,2129.0
+Schneider Electric,1,1,9.8,0,1058.0
+ScienceLogic,1,1,9.3,0,2.0
+Siemens,1,1,7.5,0,1930.0
+Sierra Wireless,1,1,8.8,0,2411.0
+Smartbedded,1,1,8.7,0,133.0
+SolarView,1,1,9.8,0,426.0
+Soliton Systems K.K,1,1,8.7,0,10.0
+Splunk,1,1,9.8,0,7.0
+Spreadsheet::ParseExcel,1,1,7.8,0,8.0
+Srimax,1,1,8.8,0,13.0
+SugarCRM,1,1,8.8,0,21.0
+Sumavision,1,1,9.8,0,601.0
+Sunhillo,1,1,9.8,0,934.0
+Symantec,1,1,8.8,0,1544.0
+TVT,1,1,7.5,0,673.0
+TanStack,1,1,9.6,1,14.0
+TeamT5,1,1,7.2,0,553.0
+TeamViewer,1,1,7.0,0,634.0
+Teclib,1,1,9.8,0,168.0
+TerraMaster,1,1,7.5,1,2.0
+Treck TCP/IP stack,1,1,5.4,0,623.0
+Trihedral,1,1,7.5,0,2135.0
+Trimble,1,1,8.6,0,0.0
+Twilio,1,1,5.3,0,20.0
+Unitronics,1,1,9.8,0,5.0
+Vite,1,1,7.5,0,296.0
+Wazuh,1,1,9.9,0,119.0
+WebKitGTK,1,1,8.8,0,-288.0
+WebPros,1,1,9.3,1,0.0
+WebRTC,1,1,8.8,1,27.0
+Webmin,1,1,9.8,1,951.0
+Widget Factory,1,1,10.0,0,10.0
+XStream,1,1,8.5,0,563.0
+XWiki,1,1,9.8,0,251.0
+Yealink,1,1,9.8,0,18.0
+Yiiframework,1,1,9.8,0,21.0
+ZK Framework,1,1,7.5,1,184.0
+ZKTeco,1,1,7.5,0,654.0
+dotCMS,1,1,9.8,1,38.0
+iCagenda,1,1,10.0,0,19.0
+n8n,1,1,8.8,0,81.0
+phpMyAdmin,1,1,9.8,0,4746.0
+rConfig,1,1,8.8,0,604.0
+reviewdog,1,1,8.6,0,4.0
+tj-actions,1,1,8.6,0,2.0

@@ -1,37 +1,42 @@
 erDiagram
-    DIM_LOCALIDADE ||--o{ FATO_PRECOS : localiza
-    DIM_PRODUTO ||--o{ FATO_PRECOS : classifica
-    DIM_TEMPO ||--o{ FATO_PRECOS : data
-    DIM_POSTO ||--o{ FATO_PRECOS : registra
+    DIM_FORNECEDOR ||--o{ FATO_VULNERABILIDADES : classifica
+    DIM_PRODUTO ||--o{ FATO_VULNERABILIDADES : afeta
+    DIM_TEMPO ||--o{ FATO_VULNERABILIDADES : adicionada_em
+    FATO_VULNERABILIDADES ||--o{ PONTE_CVE_CWE : possui
+    DIM_CWE ||--o{ PONTE_CVE_CWE : categoriza
 
-    DIM_LOCALIDADE {
-        string localidade_id PK
-        string regiao
-        string uf
-        string municipio
+    DIM_FORNECEDOR {
+        string fornecedor_id PK
+        string fornecedor
     }
     DIM_PRODUTO {
         string produto_id PK
+        string fornecedor
         string produto
-        string unidade_medida
     }
     DIM_TEMPO {
-        date data_coleta PK
+        date data PK
         int ano
         int mes
         string ano_mes
     }
-    DIM_POSTO {
-        string posto_id PK
-        string bandeira
+    DIM_CWE {
+        string cwe_id PK
     }
-    FATO_PRECOS {
-        string posto_id FK
-        string localidade_id FK
+    FATO_VULNERABILIDADES {
+        string cve_id PK
+        string fornecedor_id FK
         string produto_id FK
-        date data_coleta FK
-        double valor_venda
-        double valor_compra
-        string periodo_arquivo
+        date data_adicao FK
+        timestamp data_publicacao
+        date data_limite
+        double cvss_score
+        string cvss_severidade
+        boolean ransomware_confirmado
+        int dias_publicacao_ate_kev
+        int janela_correcao_dias
     }
-
+    PONTE_CVE_CWE {
+        string cve_id FK
+        string cwe_id FK
+    }

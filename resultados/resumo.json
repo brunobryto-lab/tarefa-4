@@ -1,92 +1,23 @@
 {
-  "raw_rows_selected_products": 820502,
-  "valid_rows": 820498,
-  "duplicate_rows_removed": 4,
-  "out_of_domain_sale_prices": 0,
-  "date_min": "2024-01-01",
-  "date_max": "2025-12-31",
-  "states": 27,
-  "municipalities": 461,
-  "top_gasoline_2025": [
-    {
-      "uf": "AC",
-      "preco_medio": 7.671
-    },
-    {
-      "uf": "AM",
-      "preco_medio": 7.226
-    },
-    {
-      "uf": "RR",
-      "preco_medio": 6.948
-    }
-  ],
-  "lowest_gasoline_2025": [
-    {
-      "uf": "PI",
-      "preco_medio": 5.925
-    },
-    {
-      "uf": "AP",
-      "preco_medio": 6.042
-    },
-    {
-      "uf": "PB",
-      "preco_medio": 6.059
-    }
-  ],
-  "best_ethanol_competitiveness": [
-    {
-      "uf": "MT",
-      "percentual_meses_competitivo": 100.0,
-      "razao_media": 0.632
-    },
-    {
-      "uf": "MS",
-      "percentual_meses_competitivo": 100.0,
-      "razao_media": 0.651
-    },
-    {
-      "uf": "SP",
-      "percentual_meses_competitivo": 100.0,
-      "razao_media": 0.659
-    },
-    {
-      "uf": "PR",
-      "percentual_meses_competitivo": 87.5,
-      "razao_media": 0.683
-    },
-    {
-      "uf": "GO",
-      "percentual_meses_competitivo": 66.7,
-      "razao_media": 0.684
-    }
-  ],
-  "highest_dispersion": [
-    {
-      "uf": "SP",
-      "produto": "ETANOL",
-      "coeficiente_variacao": 0.108
-    },
-    {
-      "uf": "DF",
-      "produto": "ETANOL",
-      "coeficiente_variacao": 0.107
-    },
-    {
-      "uf": "MT",
-      "produto": "ETANOL",
-      "coeficiente_variacao": 0.105
-    },
-    {
-      "uf": "MS",
-      "produto": "ETANOL",
-      "coeficiente_variacao": 0.104
-    },
-    {
-      "uf": "GO",
-      "produto": "ETANOL",
-      "coeficiente_variacao": 0.104
-    }
-  ]
+  "catalogo_cisa": "2026.09.27",
+  "data_catalogo": "2026-09-27T21:30:35.5521Z",
+  "registros_cisa": 1728,
+  "registros_nvd": 1728,
+  "registros_integrados": 1728,
+  "correspondencias_ambas_fontes": 1728,
+  "cves_duplicados_cisa": 0,
+  "cves_duplicados_nvd": 0,
+  "fornecedores": 283,
+  "produtos": 726,
+  "cves_ransomware_confirmado": 361,
+  "percentual_ransomware_confirmado": 20.89,
+  "cvss_ausente": 0,
+  "cwe_ausente": 110,
+  "atrasos_negativos": 228,
+  "mediana_dias_publicacao_ate_kev": 443.5,
+  "media_dias_publicacao_ate_kev": 991.1,
+  "mediana_janela_correcao_dias": 21.0,
+  "cvss_medio": 8.41,
+  "inicio_adicoes": "2021-11-03",
+  "fim_adicoes": "2026-09-27"
 }
