@@ -1,0 +1,727 @@
+fornecedor,produto,vulnerabilidades,ransomware_confirmado
+Microsoft,Windows,172,48
+Apple,Multiple Products,53,0
+Google,Chromium V8,41,0
+Microsoft,Internet Explorer,36,6
+Adobe,Flash Player,33,5
+Linux,Kernel,31,2
+Microsoft,Office,29,3
+Microsoft,Win32k,25,11
+Microsoft,Exchange Server,17,13
+Adobe,ColdFusion,16,3
+Synacor,Zimbra Collaboration Suite (ZCS),16,5
+Cisco,IOS and IOS XE Software,14,0
+Adobe,Acrobat and Reader,13,1
+Samsung,Mobile Devices,13,0
+Oracle,WebLogic Server,12,2
+Palo Alto Networks,PAN-OS,12,6
+Apple,"iOS, iPadOS, and macOS",11,0
+Microsoft,SharePoint,10,5
+Qualcomm,Multiple Chipsets,10,0
+SAP,NetWeaver,10,2
+Fortinet,FortiOS,9,6
+VMware,vCenter Server,9,3
+Adobe,Reader and Acrobat,8,1
+Apple,iOS,8,0
+Ivanti,Endpoint Manager Mobile (EPMM),7,1
+Ivanti,Pulse Connect Secure,7,2
+Juniper,Junos OS,7,0
+Oracle,Java SE,7,4
+Roundcube,Webmail,7,0
+Android,Framework,6,0
+Apache,Tomcat,6,1
+Apple,macOS,6,0
+Arm,Mali Graphics Processing Unit (GPU),6,0
+Cisco,Adaptive Security Appliance (ASA) and Firepower Threat Defense (FTD),6,2
+Cisco,IOS XR,6,0
+Cisco,IOS software,6,0
+Fortinet,Multiple Products,6,1
+Google,Chromium,6,0
+Mozilla,Firefox and Thunderbird,6,0
+Oracle,Fusion Middleware,6,1
+Zoho,ManageEngine,6,2
+Apache,Struts,5,1
+Apple,iOS and iPadOS,5,0
+Cisco,"Small Business RV160, RV260, RV340, and RV345 Series Routers",5,0
+Citrix,NetScaler,5,0
+Citrix,NetScaler ADC and NetScaler Gateway,5,2
+Langflow,Langflow,5,1
+Microsoft,Defender,5,2
+Microsoft,SharePoint Server,5,3
+MikroTik,RouterOS,5,0
+Mozilla,Firefox,5,1
+SolarWinds,Web Help Desk,5,1
+SonicWall,SMA1000 Appliances,5,3
+Zyxel,Multiple Firewalls,5,1
+Accellion,FTA,4,4
+Android,Pixel,4,0
+Apache,HTTP Server,4,2
+Apple,iOS and macOS,4,0
+Apple,"iOS, iPadOS, and watchOS",4,0
+Cisco,Adaptive Security Appliance (ASA),4,0
+Cisco,Catalyst SD-WAN Manager,4,0
+Cisco,IOS Software,4,0
+Cisco,IOS and IOS XE,4,0
+Citrix,"Application Delivery Controller (ADC), Gateway, and SD-WAN WANOP Appliance",4,1
+ConnectWise,ScreenConnect,4,2
+Craft CMS,Craft CMS,4,0
+Fortinet,FortiOS and FortiProxy,4,4
+GIGABYTE,Multiple Products,4,4
+Ivanti,Endpoint Manager (EPM),4,0
+JFrog,Artifactory,4,0
+JetBrains,TeamCity,4,4
+Microsoft,Open Management Infrastructure (OMI),4,1
+Microsoft,Word,4,0
+Nagios,Nagios XI,4,0
+Oracle,E-Business Suite,4,3
+Oracle,Java Runtime Environment (JRE),4,2
+PaperCut,NG/MF,4,1
+QNAP,Network Attached Storage (NAS),4,4
+QNAP,Photo Station,4,4
+RARLAB,WinRAR,4,3
+Roundcube,Roundcube Webmail,4,0
+SimpleHelp ,SimpleHelp,4,3
+SolarWinds,Serv-U,4,1
+Veeam,Backup & Replication,4,4
+Android,Kernel,3,0
+Apache,ActiveMQ,3,1
+Apache,OFBiz,3,0
+Atlassian,Confluence Data Center and Server,3,3
+BerriAI,LiteLLM,3,0
+Cisco,IOS Software and Cisco IOS XE Software,3,0
+Cisco,Identity Services Engine,3,0
+CrushFTP,CrushFTP,3,1
+D-Link,Multiple Routers,3,1
+Dassault Systèmes,DELMIA Apriso,3,0
+DotNetNuke (DNN),DotNetNuke (DNN),3,1
+Drupal,Core,3,1
+Exim,Exim,3,1
+F5,BIG-IP,3,2
+Fortinet,FortiClient EMS,3,1
+Fortinet,FortiWeb,3,0
+IBM,Data Risk Manager,3,0
+ImageMagick,ImageMagick,3,0
+Ivanti,Cloud Services Appliance (CSA),3,0
+Kaseya,Virtual System/Server Administrator (VSA),3,3
+Meta Platforms,WhatsApp,3,0
+Microsoft,.NET Framework,3,0
+Microsoft,Active Directory,3,2
+Microsoft,Excel,3,0
+Microsoft,Silverlight,3,2
+Mitel,MiVoice Connect,3,3
+N-able,N-central,3,0
+Palo Alto Networks,Expedition,3,0
+Qlik,Sense,3,3
+Rails,Ruby on Rails,3,0
+SaltStack,Salt,3,0
+SmarterTools,SmarterMail,3,3
+SonicWall,SonicOS,3,3
+SonicWall,SonicWall Email Security,3,3
+TeleMessage,TM SGNL,3,0
+Ubiquiti,UniFi OS,3,0
+VMware,ESXi,3,3
+VMware,Multiple Products,3,0
+Veritas,Backup Exec Agent,3,3
+WordPress,Core,3,0
+Adobe,Commerce and Magento Open Source,2,0
+Adobe,Flash Player and AIR,2,0
+Advantive,VeraCore,2,0
+Android,Android Kernel,2,0
+Apache,Log4j2,2,2
+Apache,Solr,2,0
+Apache,Struts 1,2,0
+Apple,OS X,2,0
+Arista,VeloCloud Orchestrator,2,0
+Arm,Mali GPU Kernel Driver,2,0
+Atlassian,Confluence Server and Data Center,2,1
+Atlassian,Jira Server and Data Center,2,0
+CWP,Control Web Panel,2,0
+Check Point,Multiple Products,2,0
+Cisco,AnyConnect Secure,2,2
+Cisco,HyperFlex HX,2,0
+Cisco,IOS,2,0
+Cisco,IOS XE Software,2,0
+Cisco,"IOS, XR, and XE Software",2,0
+Cisco,Secure Firewall Adaptive Security Appliance and Secure Firewall Threat Defense,2,0
+Cisco,Secure Firewall Management Center (FMC),2,2
+Cisco,Unified Communications Manager,2,0
+Citrix,NetScaler ADC and Gateway,2,1
+Citrix,SD-WAN and NetScaler,2,0
+Citrix,Session Recording,2,0
+Cleo,Multiple Products,2,2
+CyberPersons,CyberPanel,2,2
+D-Link,DCS-2530L and DCS-2670L Devices,2,0
+D-Link,DIR-859 Router,2,0
+D-Link,Multiple NAS Devices,2,0
+Dahua,IP Camera Firmware,2,0
+Dasan,Gigabit Passive Optical Network (GPON) Routers,2,1
+DrayTek,Multiple Vigor Routers,2,0
+DrayTek,VigorConnect,2,0
+Elastic,Elasticsearch,2,0
+EyesOfNetwork,EyesOfNetwork,2,0
+F5,BIG-IP Configuration Utility,2,1
+Fortinet,FortiSandbox,2,0
+Fortra,Cobalt Strike,2,0
+Fortra,GoAnywhere MFT,2,2
+GNU,Bourne-Again Shell (Bash),2,0
+GeoVision,Multiple Devices,2,0
+GitLab,Community and Enterprise Editions,2,1
+Gladinet,CentreStack and Triofox,2,0
+Google,Chromium Blink,2,0
+Google,Chromium Intents,2,0
+Google,Chromium Mojo,2,0
+Google,Chromium Skia,2,0
+Google,Pixel,2,0
+Grafana Labs,Grafana,2,0
+Hitachi Vantara,Pentaho Business Analytics (BA) Server,2,0
+Ivanti,Connect Secure and Policy Secure,2,2
+Ivanti,"Connect Secure, Policy Secure, and ZTA Gateways",2,2
+Ivanti,Sentry,2,1
+Kentico,Xperience CMS,2,0
+LiteSpeed,cPanel Plugin,2,0
+Metabase,Metabase,2,0
+Microsoft,DirectX Graphics Kernel (DXGKRNL),2,2
+Microsoft,Edge,2,0
+Microsoft,Edge and Internet Explorer,2,1
+Microsoft,Enhanced Cryptographic Provider,2,0
+Microsoft,Graphics Device Interface (GDI),2,0
+Microsoft,MSHTML,2,1
+Microsoft,PowerPoint,2,0
+Microsoft,SMBv1,2,2
+Microsoft,SMBv1 server,2,2
+Microsoft,SQL Server,2,1
+Microsoft,Windows ,2,1
+Microsoft,XML Core Services,2,0
+MinIO,MinIO,2,0
+Mitel,MiCollab,2,2
+N-able,N-Central,2,0
+NETGEAR,Multiple Devices,2,0
+OSGeo,GeoServer,2,0
+OpenPLC,ScadaBR,2,0
+Oracle,Agile Product Lifecycle Management (PLM),2,0
+PEAR,Archive_Tar,2,0
+PTZOptics,PT30X-SDI/NDI Cameras,2,0
+Paessler,PRTG Network Monitor,2,0
+Progress,WhatsUp Gold,2,1
+Red Hat,JBoss,2,2
+Red Hat,Polkit,2,1
+Samsung,MagicINFO 9 Server,2,0
+Sangoma,FreePBX,2,0
+ServiceNow,"Utah, Vancouver, and Washington DC Now Platform",2,0
+Sitecore,CMS and Experience Platform (XP),2,0
+SonicWall,SMA100,2,1
+SonicWall,SMA100 Appliances,2,0
+Sophos,Firewall,2,0
+Sudo,Sudo,2,0
+SysAid,SysAid On-Prem,2,0
+TIBCO,JasperReports,2,0
+TP-Link,Multiple Routers,2,0
+Telerik,User Interface (UI) for ASP.NET AJAX,2,1
+Trend Micro,Apex One,2,0
+Trend Micro,Apex One and OfficeScan,2,0
+Trend Micro,"Apex One, Apex One as a Service, and Worry-Free Business Security",2,0
+TrueConf,Server,2,0
+Unraid,Unraid,2,0
+WSO2,Multiple Products,2,1
+WatchGuard,Firebox,2,1
+Wing FTP Server,Wing FTP Server,2,0
+Zabbix,Frontend,2,0
+Zyxel,DSL CPE Devices,2,0
+Zyxel,Multiple Network-Attached Storage (NAS) Devices,2,0
+vBulletin,vBulletin,2,0
+7-Zip,7-Zip,1,0
+AMI,MegaRAC SPx,1,0
+ASUS,Live Update,1,0
+ASUS,RT-AX55 Routers,1,0
+ASUS,Routers,1,0
+Acclaim Systems,USAHERDS,1,0
+Acronis,Backup,1,0
+Acronis,Cyber Infrastructure (ACI),1,0
+Adminer,Adminer,1,0
+Adobe,Acrobat,1,0
+Adobe,"Acrobat and Reader, Flash Player",1,0
+Adobe,BlazeDS,1,1
+Adobe,Commerce and Magento,1,0
+Adobe,Commerce and Magento ,1,0
+Adobe,Commerce and Magento,1,0
+Adobe,Experience Manager (AEM) Forms,1,0
+Adobe,Reader,1,0
+Ajax.NET Professional,Ajax.NET Professional,1,0
+Alcatel,OmniPCX Enterprise,1,0
+Amcrest,Cameras and Network Video Recorder (NVR),1,0
+Android,Android OS,1,0
+Android,Runtime,1,0
+Apache,APISIX,1,0
+Apache,Airflow,1,0
+Apache,Airflow's Experimental API,1,0
+Apache,Apache,1,1
+Apache,CouchDB,1,0
+Apache,Flink,1,0
+Apache,HugeGraph-Server,1,0
+Apache,Kylin,1,0
+Apache,RocketMQ,1,0
+Apache,Shiro,1,0
+Apache,Spark,1,0
+Apache,Struts 2,1,0
+Apache,Superset,1,0
+Apple,"iOS, macOS, watchOS",1,0
+Aquasecurity,Trivy,1,0
+Arcadyan,Buffalo Firmware,1,0
+Arcserve,Unified Data Protection (UDP),1,0
+Arista,Extensible Operating System,1,0
+Arm,Trusted Firmware,1,0
+Array Networks ,AG/vxAG ArrayOS,1,1
+Array Networks ,ArrayOS AG,1,0
+Artifex,Ghostscript,1,0
+Atlassian,Bitbucket Server and Data Center,1,0
+Atlassian,Confluence,1,0
+Atlassian,Confluence Server,1,1
+Atlassian,Confluence Server and Data Server,1,1
+Atlassian,Confluence Server/Data Center,1,1
+Atlassian,Crowd and Crowd Data Center,1,1
+Audinate,Dante Discovery,1,0
+Aviatrix,Aviatrix Controller,1,0
+Aviatrix,Controllers,1,0
+BQE,BillQuick Web Suite,1,1
+Balbooa,Forms,1,0
+Barracuda Networks,Email Security Gateway (ESG) Appliance,1,0
+BeyondTrust,Privileged Remote Access (PRA) and Remote Support (RS),1,0
+BeyondTrust,Privileged Remote Access (PRA) and Remote Support (RS) ,1,0
+BeyondTrust,Remote Support (RS) and Privileged Remote Access (PRA),1,1
+Broadcom,Brocade Fabric OS,1,0
+Broadcom,VMware Aria Operations,1,0
+Broadcom,VMware Aria Operations and VMware Tools,1,0
+Broadcom,VMware vCenter,1,1
+Broadcom,VMware vCenter Server,1,0
+Cacti,Cacti,1,0
+ChakraCore,ChakraCore scripting engine,1,0
+Check Point,Quantum Security Gateways,1,1
+Check Point,Security Gateway,1,1
+Check Point,SmartConsole,1,0
+Checkbox,Checkbox Survey,1,0
+Cisco,Adaptive Security Appliance and Firepower Threat Defense,1,1
+Cisco,Catalyst 4500 Series Switches and Cisco Catalyst 4500-X Series Switches,1,0
+Cisco,Catalyst 6800 Series Switches,1,0
+Cisco,Catalyst SD-WAN,1,0
+Cisco,Catalyst SD-WAN Controller and Manager,1,0
+Cisco,Catalyst SD-WAN Manger,1,0
+Cisco,Cisco IOS XE Web UI,1,0
+Cisco,Cisco IP Phones,1,0
+Cisco,IOS XE Web UI,1,0
+Cisco,"IOS, IOS XR, and IOS XE",1,0
+Cisco,Multiple Products,1,0
+Cisco,NX-OS,1,0
+Cisco,Prime Data Center Network Manager (DCNM),1,0
+Cisco,RV Series Routers,1,0
+Cisco,SD-WAN,1,0
+Cisco,Secure Access Control System (ACS),1,0
+Cisco,Secure Email Gateway,1,0
+Cisco,Secure Firewall Adaptive Security Appliance (ASA) and Secure Firewall Threat Defense (FTD) ,1,0
+Cisco,Secure Firewall Management Center (FMC) and Security Cloud Control (SCC) Firewall Management,1,0
+Cisco,Small Business RV Series Routers,1,0
+Cisco,Small Business RV320 and RV325 Dual Gigabit WAN VPN Routers,1,0
+Cisco,Small Business RV320 and RV325 Routers,1,0
+Cisco,Smart Licensing Utility,1,0
+Cisco,VPN Routers,1,0
+Citrix,Application Delivery Controller (ADC) and Gateway,1,0
+Citrix,Content Collaboration,1,0
+Citrix,"NetScaler SD-WAN Enterprise, CloudBridge Virtual WAN, and XenMobile Server",1,0
+Citrix,ShareFile,1,1
+Citrix,StoreFront Server,1,1
+Citrix,Workspace Application and Receiver for Windows,1,1
+Code Aurora,ACDB Audio Driver,1,0
+Commvault,Command Center,1,0
+Commvault,Web Server,1,0
+Crestron,Multiple Products,1,0
+D-Link,DCS-930L Devices,1,0
+D-Link,DIR-300 Router,1,0
+D-Link,DIR-600 Router,1,0
+D-Link,DIR-605 Router,1,0
+D-Link,DIR-610 Devices,1,0
+D-Link,DIR-645 Router,1,0
+D-Link,DIR-820 Router,1,0
+D-Link,DIR-820L,1,0
+D-Link,DIR-823X,1,0
+D-Link,DIR-825 R1 Devices,1,0
+D-Link,DNR-322L,1,0
+D-Link,DNS-320 Device,1,0
+D-Link,DNS-320 Storage Device,1,1
+D-Link,DSL-2750B Devices,1,0
+D-Link,DSL-2760U,1,0
+D-Link,DWL-2600AP Access Point,1,0
+D-Link,Routers,1,0
+D-Link and TRENDnet,Multiple Devices,1,0
+DD-WRT,DD-WRT,1,0
+Daemon,Daemon Tools Lite,1,0
+Dell,RecoverPoint for Virtual Machines (RP4VMs),1,0
+Dell,dbutil Driver,1,0
+Delta Electronics,DOPSoft 2,1,0
+Digiever,DS-2105 Pro,1,0
+Docker,Desktop Community Edition,1,0
+DrayTek,Vigor Routers,1,0
+Drupal,Drupal Core,1,1
+Drupal,Drupal core,1,0
+Edimax,IC-7100 IP Camera,1,0
+Elastic,Kibana,1,0
+Embedthis,GoAhead,1,0
+Erlang,Erlang/OTP,1,0
+Exim,Exim Internet Mailer,1,0
+Exim,Mail Transfer Agent (MTA),1,0
+F5,BIG-IP APM,1,0
+F5,BIG-IP Traffic Management Microkernel,1,0
+F5,BIG-IP and BIG-IQ Centralized Management,1,1
+FXC,"AE1021, AE1021PE",1,0
+FatPipe,"WARP, IPVPN, and MPVPN software",1,0
+ForgeRock,Access Management (AM),1,1
+Fortinet,FortiManager,1,0
+Fortinet,FortiOS and FortiADC,1,1
+Fortinet,FortiOS and FortiProxy SSL-VPN,1,1
+FreeType,FreeType,1,0
+Fuel CMS,Fuel CMS,1,0
+GNU,GNU Bash,1,0
+GNU,GNU C Library,1,0
+GNU,InetUtils,1,0
+Git,Git,1,0
+GitLab,Community Edition and Enterprise Edition,1,0
+GitLab,GitLab,1,0
+GitLab,GitLab CE/EE,1,0
+Gitea,Gitea,1,0
+Gladinet,CentreStack,1,0
+Gladinet,Triofox,1,0
+Gogs,Gogs,1,0
+Google,Chrome,1,0
+Google,Chrome Blink,1,0
+Google,Chrome FreeType,1,0
+Google,Chrome Media,1,0
+Google,Chrome WebAudio,1,0
+Google,Chrome for Android UI,1,0
+Google,Chromium Animation,1,0
+Google,Chromium GPU,1,0
+Google,Chromium Indexed DB API,1,0
+Google,Chromium Network Service,1,0
+Google,Chromium PopupBlocker,1,0
+Google,Chromium Portals,1,0
+Google,Chromium WebGL,1,0
+Google,Chromium WebP,1,0
+Google,Chromium WebRTC,1,0
+Google,Chromium libvpx,1,0
+Google,Dawn,1,0
+Google,Skia,1,0
+Grandstream,UCM6200,1,0
+Hewlett Packard (HP),OpenView Network Node Manager,1,0
+Hewlett Packard (HP),"ProCurve Manager (PCM), PCM+, Identity Driven Manager (IDM), and Application Lifecycle Management",1,0
+Hewlett Packard Enterprise (HPE),OneView,1,0
+Hikvision,Multiple Products,1,0
+Hikvision,Security cameras web server,1,0
+IBM,Aspera Faspex,1,1
+IBM,InfoSphere BigInsights,1,1
+IBM,Langflow,1,0
+IBM,Planning Analytics,1,0
+IBM,WebSphere Application Server and Server Hypervisor Edition,1,0
+IETF,HTTP/2,1,0
+IETF,Service Location Protocol (SLP),1,0
+IGEL,IGEL OS,1,0
+Ignite Realtime,Openfire,1,0
+InduSoft,Web Studio,1,0
+Intel,"Active Management Technology (AMT), Small Business Technology (SBT), and Standard Manageability",1,0
+Intel,Ethernet Diagnostics Driver for Windows,1,1
+Ivanti, Endpoint Manager (EPM),1,0
+Ivanti,Cloud Services Appliance,1,0
+Ivanti,"Connect Secure, Policy Secure, and Neurons",1,1
+Ivanti,Endpoint Manager Cloud Service Appliance (EPM CSA),1,1
+Ivanti,Endpoint Manager Mobile (EPMM) and MobileIron Core,1,1
+Ivanti,MobileIron Multiple Products,1,0
+Ivanti,Pulse Connect Secure and Pulse Policy Secure,1,1
+Ivanti,Virtual Traffic Manager,1,0
+JQuery,JQuery,1,0
+Jenkins,Jenkins,1,0
+Jenkins,Jenkins Command Line Interface (CLI),1,1
+Jenkins,Jenkins Stapler Web Framework,1,0
+Jenkins,Jenkins User Interface (UI),1,0
+Jenkins,Matrix Project Plugin,1,0
+Jenkins,Script Security Plugin,1,0
+JoomShaper,SP Page Builder,1,0
+Joomla!,Joomla!,1,0
+Joomlack,Page Builder,1,0
+Juniper,ScreenOS,1,0
+Justice AV Solutions,Viewer ,1,0
+KNX Association,KNX Protocol Connection Authorization Option 1,1,0
+Kentico,Kentico Xperience,1,0
+Kentico,Xperience,1,0
+Kestra,Kestra OSS,1,0
+Kingsoft,WPS Office,1,0
+Kludex,Starlette,1,0
+LG,N1A1 NAS,1,0
+Lantronix,EDS5000,1,0
+Laravel,Ignition,1,1
+Laravel,Laravel Framework,1,0
+Laravel,Livewire,1,0
+Libraesva,Email Security Gateway,1,0
+Liferay,Liferay Portal,1,0
+Looking Glass,Multi-Router Looking Glass (MRLG),1,0
+MDaemon,Email Server,1,0
+MLflow,MLflow,1,0
+Marimo,Marimo,1,0
+McAfee,McAfee Total Protection (MTP),1,0
+MediaTek,Multiple Chipsets,1,0
+Meta,React Server Components,1,1
+Micro Focus,Micro Focus Access Manager,1,0
+Micro Focus,Operation Bridge Reporter (OBR),1,0
+Microsoft,.NET Core and Visual Studio,1,0
+Microsoft,".NET Framework, SharePoint, Visual Studio",1,0
+Microsoft,ATM Font Driver,1,0
+Microsoft,Active Directory Federation Services,1,0
+Microsoft,Ancillary Function Driver (afd.sys),1,0
+Microsoft,Client-Server Run-time Subsystem (CSRSS),1,1
+Microsoft,Configuration Manager,1,0
+Microsoft,DWM Core Library,1,1
+Microsoft,DirectX,1,0
+Microsoft,Exchange,1,1
+Microsoft,Forefront Threat Management Gateway (TMG),1,0
+Microsoft,Graphics Component,1,0
+Microsoft,HTTP Protocol Stack,1,0
+Microsoft,HTTP.sys,1,0
+Microsoft,Hyper-V RemoteFX,1,0
+Microsoft,Input Method Editor (IME) Japanese,1,0
+Microsoft,Internet Explorer Scripting Engine,1,0
+Microsoft,Internet Explorer and Edge,1,1
+Microsoft,Internet Information Services (IIS),1,0
+Microsoft,Internet Key Exchange (IKE) Service Extensions,1,0
+Microsoft,Kerberos Key Distribution Center (KDC),1,0
+Microsoft,MSCOMCTL.OCX,1,1
+Microsoft,Malware Protection Engine,1,0
+Microsoft,Microsoft,1,0
+Microsoft,Netlogon,1,1
+Microsoft,Office Outlook,1,0
+Microsoft,Office and WordPad,1,1
+Microsoft,Outlook,1,0
+Microsoft,Partner Center,1,0
+Microsoft,Power Pages,1,0
+Microsoft,Project,1,0
+Microsoft,Publisher,1,0
+Microsoft,Remote Desktop Services,1,1
+Microsoft,SMBv3,1,1
+Microsoft,Skype for Business,1,0
+Microsoft,SmartScreen Prompt,1,0
+Microsoft,Streaming Service,1,0
+Microsoft,Streaming Service Proxy,1,0
+Microsoft,Task Scheduler,1,1
+Microsoft,Update Notification Manager,1,1
+Microsoft,Visual Basic for Applications (VBA),1,0
+Microsoft,WinVerifyTrust function,1,0
+Microsoft,Windows Ancillary Function Driver for WinSock ,1,0
+Microsoft,Windows CNG Key Isolation Service,1,0
+Microsoft,Windows COM+ Event System Service,1,0
+Microsoft,WordPad,1,0
+Mirasvit,Mirasvit Full Page Cache Warmer,1,0
+Mitel,"MiCollab, MiVoice Business Express",1,0
+Mitel,SIP Phones,1,0
+MongoDB,MongoDB and MongoDB Server,1,0
+MongoDB,mongo-express,1,0
+Motex,LANSCOPE Endpoint Manager,1,0
+Mozilla,"Firefox, Firefox ESR, and Thunderbird",1,0
+Mozilla,Multiple Products,1,0
+NAKIVO,Backup and Replication,1,0
+NETGEAR,DGN2200 Devices,1,0
+NETGEAR,JGS516PE Devices,1,0
+NETGEAR,Multiple Routers,1,0
+NETGEAR,WNR2000v5 Router,1,0
+NETGEAR,Wireless Access Point (WAP) Devices,1,0
+NETGEAR,Wireless Router DGN2200,1,0
+NUUO,NVRmini Devices,1,0
+NUUO,NVRmini2 Devices,1,0
+Netis,WF2419 Devices,1,0
+Netwrix,Auditor,1,1
+NextGen Healthcare,Mirth Connect,1,1
+Nice,Linear eMerge E3-Series,1,0
+North Grid,Proself,1,0
+Nostromo,nhttpd,1,0
+Notepad++,Notepad++,1,0
+Novi Survey,Novi Survey,1,0
+Npm package,System Information Library for Node.JS,1,0
+Nx,Nx Console,1,1
+OSGeo,JAI-EXT,1,0
+October CMS,October CMS,1,0
+Omnissa,Workspace One UEM,1,0
+OpenBSD,OpenSMTPD,1,0
+OpenSSL,OpenSSL,1,0
+Oracle, PeopleSoft Enterprise PeopleTools,1,1
+Oracle,ADF Faces,1,0
+Oracle,BI Publisher (Formerly XML Publisher),1,0
+Oracle,HTTP Server and Oracle Weblogic Server Proxy Plug-in,1,0
+Oracle,Intelligence Enterprise Edition,1,0
+Oracle,Java SE JDK and JRE,1,0
+Oracle,Java SE and JRockit,1,0
+Oracle,Multiple Products,1,0
+Oracle,Solaris,1,0
+Oracle,Solaris and Zettabyte File System (ZFS),1,0
+Oracle,VirtualBox,1,0
+PHP,FastCGI Process Manager (FPM),1,1
+PHP,PHP,1,0
+PHP,PHPMailer,1,0
+PHP Group,PHP,1,1
+PHPUnit,PHPUnit,1,0
+PTC,Windchill and FlexPLM,1,1
+PaperCut,MF/NG,1,1
+Perl,Exiftool,1,0
+Pi-hole,AdminLTE,1,0
+PlaySMS,PlaySMS,1,0
+Plex,Media Server,1,0
+Prettier,eslint-config-prettier,1,0
+Primetek,Primefaces Application,1,0
+Progress,ASP.NET AJAX and Sitefinity,1,0
+Progress,Kemp LoadMaster,1,0
+Progress,LoadMaster,1,0
+Progress,MOVEit Transfer,1,1
+Progress,Telerik Report Server,1,0
+Progress,Telerik UI for ASP.NET AJAX,1,1
+Progress,WS_FTP Server,1,1
+ProjectSend,ProjectSend,1,0
+Pulse Secure,Pulse Connect Secure,1,0
+QNAP,QNAP Network-Attached Storage (NAS),1,0
+QNAP,QTS,1,1
+QNAP,VioStor NVR,1,0
+QNAP Systems,Helpdesk,1,0
+Qualcomm,Multiple Chipsets ,1,0
+Qualcomm,"Snapdragon Auto, Snapdragon Compute, Snapdragon Connectivity, Snapdragon Consumer IOT, Snapdragon Industrial IOT, Snapdragon Mobile, Snapdragon Voice & Music, Snapdragon Wearables",1,0
+Qualitia,Active! Mail,1,0
+Quest,KACE System Management Appliance,1,1
+Quest,KACE Systems Management Appliance (SMA),1,0
+RARLAB,UnRAR,1,1
+Ray-Project,Ray,1,0
+React Native Community,CLI,1,0
+Realtek,AP-Router SDK,1,0
+Realtek,Jungle Software Development Kit (SDK),1,0
+Realtek,SDK,1,0
+Red Hat,Automatic Bug Reporting Tool,1,0
+Red Hat,JBoss Application Server,1,1
+Red Hat,JBoss RichFaces Framework,1,0
+Red Hat,JBoss Seam 2,1,0
+Red Hat,Libuser,1,0
+Redis,Debian-specific Redis Servers,1,0
+Rejetto,HTTP File Server,1,1
+Rejetto,HTTP File Server (HFS),1,0
+Reolink,Multiple IP Cameras,1,0
+Reolink,RLC-410W IP Camera,1,0
+Rockwell,Multiple Products,1,0
+Ruckus Wireless,Multiple Products,1,0
+SAP,Commerce Cloud,1,0
+SAP,Customer Relationship Management (CRM),1,1
+SAP,Multiple Products,1,0
+SAP,Solution Manager,1,0
+SIMalliance,Toolbox Browser,1,0
+SKYSEA,Client View,1,0
+Samba,Samba,1,1
+Sangoma,FreePBX ,1,0
+Sangoma,Switchvox,1,0
+Schneider Electric,U.motion Builder,1,0
+ScienceLogic,SL1,1,0
+Siemens,SIMATIC CP,1,0
+Sierra Wireless,AirLink ALEOS,1,0
+Sitecore,Multiple Products,1,0
+Sitecore,XP,1,1
+Smartbedded,Meteobridge,1,0
+SolarView,Compact,1,0
+SolarWinds,Orion,1,0
+SolarWinds,Virtualization Manager,1,0
+Soliton Systems K.K,FileZen,1,0
+Sonatype,Nexus Repository,1,0
+Sonatype,Nexus Repository Manager,1,0
+SonicWall,SMA 100 Appliances,1,1
+SonicWall,SMA1000 appliance,1,0
+SonicWall,SSLVPN SMA100,1,1
+SonicWall,Secure Remote Access (SRA),1,1
+Sophos,CyberoamOS,1,1
+Sophos,SFOS,1,1
+Sophos,SG UTM,1,0
+Sophos,Web Appliance,1,0
+Sophos,XG Firewall,1,0
+Splunk,Enterprise,1,0
+Spreadsheet::ParseExcel,Spreadsheet::ParseExcel,1,0
+Srimax,Output Messenger,1,0
+SugarCRM,Multiple Products,1,0
+Sumavision,Enhanced Multimedia Router (EMR),1,0
+Sunhillo,SureLine,1,0
+Symantec,Symantec Messaging Gateway,1,0
+Synacor, Zimbra Collaboration Suite (ZCS),1,0
+Synacor,Zimbra Collaborate Suite (ZCS),1,1
+Synacor,Zimbra Collaboration Suite,1,0
+SysAid,SysAid Server,1,1
+TP-Link,Archer AX21,1,0
+TP-Link,Multiple Archer Devices,1,0
+TP-Link,TL-WA855RE,1,0
+TP-Link,TL-WR841N,1,0
+TVT,NVMS-1000,1,0
+TanStack,TanStack,1,1
+TeamT5,ThreatSonar Anti-Ransomware,1,0
+TeamViewer,Desktop,1,0
+Teclib,GLPI,1,0
+Tenda,AC11 Router,1,0
+Tenda,AC1900 Router AC15 Model,1,0
+Tenda,"AC7, AC9, and AC10 Routers",1,0
+TerraMaster,TerraMaster OS,1,1
+ThinkPHP,ThinkPHP,1,0
+ThinkPHP,noneCms,1,0
+Treck TCP/IP stack,IPv6,1,0
+Trend Micro,Apex Central,1,0
+Trend Micro,Apex One and Apex One as a Service,1,0
+Trend Micro,Apex One and Worry-Free Business Security,1,0
+Trend Micro,"Apex One, OfficeScan and Worry-Free Business Security Agents",1,0
+Trend Micro,"Apex One, OfficeScan, and Worry-Free Business Security",1,0
+Trend Micro,OfficeScan,1,0
+Trihedral,VTScada (formerly VTS),1,0
+Trimble,Cityworks,1,0
+TrueConf,Client,1,0
+Twilio,Authy,1,0
+Ubiquiti,AirOS,1,0
+Unitronics,Vision PLC and HMI,1,0
+VMware,Aria Operations for Networks,1,0
+VMware,ESXi and Workstation,1,0
+VMware,"ESXi, Workstation, and Fusion",1,0
+VMware,SD-WAN Edge,1,0
+VMware,Spring Cloud Gateway,1,0
+VMware,Spring Framework,1,0
+VMware,Tools,1,0
+VMware,VMware ESXi and Horizon DaaS,1,1
+VMware,Workspace ONE Access and Identity Manager,1,1
+VMware,vCenter Server and Cloud Foundation,1,0
+VMware,vRealize Operations Manager API,1,1
+VMware Tanzu,Spring Cloud,1,0
+VMware Tanzu,Spring Cloud Configuration (Config) Server,1,0
+VMware Tanzu,Spring Data Commons,1,1
+Versa,Concerto,1,0
+Versa,Director,1,0
+Vite,Vitejs,1,0
+WatchGuard,Firebox and XTM,1,0
+WatchGuard,Firebox and XTM Appliances,1,0
+Wazuh,Wazuh Server,1,0
+WebKitGTK,WebKitGTK,1,0
+WebPros,cPanel & WHM and WP2 (WordPress Squared),1,1
+WebRTC,WebRTC,1,1
+Webmin,Webmin,1,1
+Widget Factory,Joomla Content Editor ,1,0
+WordPress,File Manager Plugin,1,0
+WordPress,Snap Creek Duplicator Plugin,1,0
+WordPress,Social Warfare Plugin,1,0
+XStream,XStream,1,0
+XWiki,Platform,1,0
+Yealink,Device Management,1,0
+Yiiframework,Yii,1,0
+ZK Framework,AuUploader,1,1
+ZKTeco,BioTime,1,0
+Zoho,Desktop Central,1,0
+Zoho,ManageEngine ServiceDesk Plus (SDP),1,0
+Zoho,ManageEngine ServiceDesk Plus (SDP) / SupportCenter Plus,1,0
+Zyxel,EMG2926 Routers,1,1
+Zyxel,GS1900 Series Switches,1,0
+Zyxel,Multiple Products,1,0
+Zyxel,P660HN-T1A Routers,1,0
+dotCMS,dotCMS,1,1
+iCagenda,iCagenda,1,0
+n8n,n8n,1,0
+ownCloud,ownCloud,1,0
+ownCloud,ownCloud graphapi,1,0
+phpMyAdmin,phpMyAdmin,1,0
+rConfig,rConfig,1,0
+reviewdog,action-setup GitHub Action,1,0
+tj-actions,changed-files GitHub Action,1,0
