@@ -1,0 +1,92 @@
+{
+  "raw_rows_selected_products": 820502,
+  "valid_rows": 820498,
+  "duplicate_rows_removed": 4,
+  "out_of_domain_sale_prices": 0,
+  "date_min": "2024-01-01",
+  "date_max": "2025-12-31",
+  "states": 27,
+  "municipalities": 461,
+  "top_gasoline_2025": [
+    {
+      "uf": "AC",
+      "preco_medio": 7.671
+    },
+    {
+      "uf": "AM",
+      "preco_medio": 7.226
+    },
+    {
+      "uf": "RR",
+      "preco_medio": 6.948
+    }
+  ],
+  "lowest_gasoline_2025": [
+    {
+      "uf": "PI",
+      "preco_medio": 5.925
+    },
+    {
+      "uf": "AP",
+      "preco_medio": 6.042
+    },
+    {
+      "uf": "PB",
+      "preco_medio": 6.059
+    }
+  ],
+  "best_ethanol_competitiveness": [
+    {
+      "uf": "MT",
+      "percentual_meses_competitivo": 100.0,
+      "razao_media": 0.632
+    },
+    {
+      "uf": "MS",
+      "percentual_meses_competitivo": 100.0,
+      "razao_media": 0.651
+    },
+    {
+      "uf": "SP",
+      "percentual_meses_competitivo": 100.0,
+      "razao_media": 0.659
+    },
+    {
+      "uf": "PR",
+      "percentual_meses_competitivo": 87.5,
+      "razao_media": 0.683
+    },
+    {
+      "uf": "GO",
+      "percentual_meses_competitivo": 66.7,
+      "razao_media": 0.684
+    }
+  ],
+  "highest_dispersion": [
+    {
+      "uf": "SP",
+      "produto": "ETANOL",
+      "coeficiente_variacao": 0.108
+    },
+    {
+      "uf": "DF",
+      "produto": "ETANOL",
+      "coeficiente_variacao": 0.107
+    },
+    {
+      "uf": "MT",
+      "produto": "ETANOL",
+      "coeficiente_variacao": 0.105
+    },
+    {
+      "uf": "MS",
+      "produto": "ETANOL",
+      "coeficiente_variacao": 0.104
+    },
+    {
+      "uf": "GO",
+      "produto": "ETANOL",
+      "coeficiente_variacao": 0.104
+    }
+  ]
+}
