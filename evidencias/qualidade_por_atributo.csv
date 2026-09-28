@@ -1,0 +1,13 @@
+atributo,tipo,linhas,nulos,percentual_nulos,distintos,minimo,maximo,dominio_esperado
+regiao,str,820502,0,0.0,5,CO,SE,"N, NE, CO, SE, S"
+uf,str,820502,0,0.0,27,AC,TO,27 UFs brasileiras
+municipio,str,820502,0,0.0,461,ABAETETUBA,XINGUARA,texto não vazio
+produto,str,820502,0,0.0,2,ETANOL,GASOLINA,GASOLINA ou ETANOL
+data_coleta,datetime64[us],820502,0,0.0,544,2024-01-01 00:00:00,2025-12-31 00:00:00,2024-01-01 a 2025-12-31
+valor_venda,float64,820502,0,0.0,527,2.63,9.29,> 0 e < 20 R$/litro
+valor_compra,float64,820502,820502,100.0,0,,,> 0 e < 20 R$/litro; ausência permitida
+unidade_medida,str,820502,0,0.0,1,R$ / LITRO,R$ / LITRO,R$ / litro
+bandeira,str,820502,0,0.0,55,ALE,WATT,texto não vazio; ausência permitida
+posto_id,str,820502,0,0.0,19696,0001b007b7cb4d05,fffe8751081cf553,hash SHA-256 truncado de 16 caracteres
+ano,int32,820502,0,0.0,2,2024,2025,2024 ou 2025
+mes,str,820502,0,0.0,24,2024-01,2025-12,AAAA-MM

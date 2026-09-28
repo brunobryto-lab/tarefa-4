@@ -1,0 +1,37 @@
+erDiagram
+    DIM_LOCALIDADE ||--o{ FATO_PRECOS : localiza
+    DIM_PRODUTO ||--o{ FATO_PRECOS : classifica
+    DIM_TEMPO ||--o{ FATO_PRECOS : data
+    DIM_POSTO ||--o{ FATO_PRECOS : registra
+
+    DIM_LOCALIDADE {
+        string localidade_id PK
+        string regiao
+        string uf
+        string municipio
+    }
+    DIM_PRODUTO {
+        string produto_id PK
+        string produto
+        string unidade_medida
+    }
+    DIM_TEMPO {
+        date data_coleta PK
+        int ano
+        int mes
+        string ano_mes
+    }
+    DIM_POSTO {
+        string posto_id PK
+        string bandeira
+    }
+    FATO_PRECOS {
+        string posto_id FK
+        string localidade_id FK
+        string produto_id FK
+        date data_coleta FK
+        double valor_venda
+        double valor_compra
+        string periodo_arquivo
+    }
+
