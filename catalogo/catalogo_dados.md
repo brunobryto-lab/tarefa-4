@@ -1,88 +1,55 @@
-# Catálogo de Dados
+# Catálogo de dados — CISA KEV + NVD
 
-## Linhagem geral
+## Domínio e linhagem
 
-`ANP ZIP/CSV -> tarefa_4_bronze_precos -> tarefa_4_silver_precos -> dimensões/fato e tabelas analíticas Gold`
+O domínio é **gestão de vulnerabilidades em segurança cibernética**. O grão da tabela fato é uma vulnerabilidade identificada por CVE e confirmada pela CISA como explorada no mundo real.
 
-Fonte oficial: Série Histórica de Preços de Combustíveis e de GLP da ANP. Extração realizada em 28/09/2026. As URLs e o período do arquivo são registrados na Bronze. Transformações completas estão no notebook `notebooks/01_pipeline_anp.py`.
+```text
+CISA KEV JSON ──> Bronze CISA ──┐
+                                ├──> Silver integrada ──> dimensões, fato e ponte CVE–CWE ──> agregações Gold
+NVD CVE API ────> Bronze NVD ───┘
+```
 
-## Camada Bronze - `tarefa_4_bronze_precos`
-
-Todos os campos do CSV são texto para preservar o valor recebido. Além dos campos abaixo, a tabela contém `periodo_arquivo`, `url_origem` e `ingerido_em`.
-
-| Atributo de origem | Tipo | Descrição | Domínio / nulabilidade | Linhagem |
-|---|---|---|---|---|
-| Regiao - Sigla | string | Região do posto | N, NE, CO, SE, S; obrigatório | ANP, sem transformação |
-| Estado - Sigla | string | UF do posto | 27 UFs; obrigatório | ANP, sem transformação |
-| Municipio | string | Município do posto | texto; obrigatório | ANP, sem transformação |
-| Revenda | string | Razão social da revenda | texto | ANP; excluído da Silver por minimização |
-| CNPJ da Revenda | string | Identificador da revenda | CNPJ | ANP; transformado em SHA-256 |
-| Nome da Rua | string | Logradouro | texto | ANP; excluído da Silver |
-| Numero Rua | string | Número | texto | ANP; excluído da Silver |
-| Complemento | string | Complemento do endereço | texto; nulo permitido | ANP; excluído da Silver |
-| Bairro | string | Bairro | texto; nulo permitido | ANP; excluído da Silver |
-| Cep | string | CEP | texto | ANP; excluído da Silver |
-| Produto | string | Combustível pesquisado | categorias da ANP | ANP; padronizado e filtrado |
-| Data da Coleta | string | Data da observação | dd/MM/aaaa | ANP; convertido para date |
-| Valor de Venda | string | Preço ao consumidor | decimal com vírgula | ANP; convertido para double |
-| Valor de Compra | string | Preço de aquisição pelo posto | decimal; nulo permitido | ANP; convertido para double |
-| Unidade de Medida | string | Unidade do preço | R$ / LITRO | ANP; padronizado |
-| Bandeira | string | Bandeira declarada | categorias da ANP | ANP; padronizado |
-| periodo_arquivo | string | Semestre do arquivo | 2024-01 a 2025-02 | derivado do nome/URL |
-| url_origem | string | URL de download | URL HTTPS da ANP | acrescentado na ingestão |
-| ingerido_em | timestamp | Horário da ingestão | timestamp; obrigatório | relógio do Databricks |
-
-## Camada Silver - `tarefa_4_silver_precos`
-
-| Atributo | Tipo | Descrição | Domínio / nulabilidade | Linhagem e transformação |
-|---|---|---|---|---|
-| regiao | string | Região do posto | N, NE, CO, SE, S; não nulo | maiúsculas e trim da Bronze |
-| uf | string | Unidade da Federação | duas letras; não nulo | maiúsculas e trim da Bronze |
-| municipio | string | Município | texto não vazio | maiúsculas e trim da Bronze |
-| posto_id | string | Identificador pseudonimizado | SHA-256; não nulo | hash do CNPJ |
-| produto | string | Combustível | GASOLINA ou ETANOL | padronizado, sem acentos e filtrado |
-| data_coleta | date | Data do preço | 01/01/2024 a 31/12/2025 | conversão de dd/MM/aaaa |
-| valor_venda | double | Preço ao consumidor | R$ 0,50 a R$ 20,00/l; não nulo | vírgula substituída por ponto e cast |
-| valor_compra | double | Preço de aquisição | R$ 0,50 a R$ 20,00/l; nulo permitido | cast; 100% ausente neste recorte |
-| unidade_medida | string | Unidade | R$ / LITRO | maiúsculas e trim |
-| bandeira | string | Bandeira do posto | categoria ANP; nulo permitido | maiúsculas e trim |
-| periodo_arquivo | string | Semestre de origem | 2024-01 a 2025-02 | herdado da Bronze |
-| url_origem | string | URL de origem | HTTPS ANP | herdado da Bronze |
-| ingerido_em | timestamp | Momento da ingestão | timestamp | herdado da Bronze |
-| ano | int | Ano da coleta | 2024 ou 2025 | derivado de data_coleta |
-| mes | string | Ano e mês | AAAA-MM | derivado de data_coleta |
-| registro_valido | boolean | Aprovação das regras mínimas | true/false; não nulo | data, preço e UF conformes |
-
-## Camada Gold - modelo estrela
-
-### `tarefa_4_fato_precos`
-
-| Atributo | Tipo | Descrição | Domínio / nulabilidade | Linhagem |
-|---|---|---|---|---|
-| posto_id | string | Chave do posto | hash; obrigatório | Silver |
-| localidade_id | string | Chave da localidade | hash; obrigatório | região + UF + município |
-| produto_id | string | Chave do produto | hash; obrigatório | produto + unidade |
-| data_coleta | date | Chave de tempo | data válida; obrigatória | Silver |
-| valor_venda | double | Medida de preço | 0,50 a 20,00 | Silver validada |
-| valor_compra | double | Medida de custo | nulo permitido | Silver |
-| periodo_arquivo | string | Partição lógica de origem | quatro semestres | Silver |
-
-### Dimensões
-
-| Tabela | Chave | Atributos | Regra |
+| Camada | Tabela | Grão | Finalidade |
 |---|---|---|---|
-| tarefa_4_dim_localidade | localidade_id | região, UF, município | combinações distintas da Silver |
-| tarefa_4_dim_produto | produto_id | produto, unidade_medida | combinações distintas da Silver |
-| tarefa_4_dim_tempo | data_coleta | ano, mês, ano_mes | datas distintas da Silver |
-| tarefa_4_dim_posto | posto_id | bandeira | postos pseudonimizados distintos |
+| Bronze | `tarefa_4_bronze_cisa_kev` | uma vulnerabilidade do catálogo CISA | preservar atributos, metadados e URL da fonte |
+| Bronze | `tarefa_4_bronze_nvd_kev` | um registro CVE devolvido pelo NVD | preservar dados técnicos, CVSS e fraquezas |
+| Silver | `tarefa_4_silver_vulnerabilidades` | uma linha por CVE | integrar, tipar, deduplicar e derivar indicadores |
+| Gold | `tarefa_4_fato_vulnerabilidades` | uma vulnerabilidade explorada | medidas e chaves analíticas |
+| Gold | `tarefa_4_dim_fornecedor` | um fornecedor/projeto | dimensão organizacional |
+| Gold | `tarefa_4_dim_produto` | um produto por fornecedor | dimensão tecnológica |
+| Gold | `tarefa_4_dim_tempo` | uma data de inclusão no KEV | dimensão temporal |
+| Gold | `tarefa_4_dim_cwe` | uma categoria CWE | dimensão de fraqueza |
+| Gold | `tarefa_4_ponte_cve_cwe` | um par CVE–CWE | resolve a relação muitos-para-muitos |
 
-## Tabelas analíticas Gold
+## Dicionário da fato
 
-| Tabela | Grão | Finalidade |
-|---|---|---|
-| tarefa_4_qualidade | atributo | completude, cardinalidade, mínimos e máximos |
-| tarefa_4_precos_uf_2025 | UF e produto | responder extremos estaduais em 2025 |
-| tarefa_4_evolucao_mensal | mês e produto | medir tendência temporal |
-| tarefa_4_competitividade_etanol | UF | medir meses com razão etanol/gasolina <= 0,70 |
-| tarefa_4_dispersao | UF e produto | comparar coeficiente de variação e amplitude central |
+| Atributo | Tipo | Domínio/regra | Origem |
+|---|---|---|---|
+| `cve_id` | string | `CVE-AAAA-NNNN...`, obrigatório e único | CISA/NVD |
+| `fornecedor_id` | string | SHA-256 do fornecedor | derivado |
+| `produto_id` | string | SHA-256 de fornecedor + produto | derivado |
+| `data_adicao` | date | data de entrada no KEV | CISA `dateAdded` |
+| `data_publicacao` | timestamp | publicação do CVE | NVD `published` |
+| `data_limite` | date | prazo definido pela CISA | CISA `dueDate` |
+| `cvss_score` | double | 0–10; versão mais recente disponível | NVD `metrics` |
+| `cvss_severidade` | string | LOW, MEDIUM, HIGH ou CRITICAL | NVD |
+| `prioridade_cvss` | string | BAIXA, MEDIA, ALTA ou CRITICA | derivado do escore |
+| `ransomware_confirmado` | boolean | verdadeiro apenas quando a CISA informa `Known` | CISA |
+| `dias_publicacao_ate_kev` | inteiro | `data_adicao - data_publicacao` | derivado |
+| `janela_correcao_dias` | inteiro | `data_limite - data_adicao` | derivado |
+| `status_nvd` | string | situação editorial do CVE | NVD |
+| `triagem_forense` | string | Yes/No | CISA |
 
+## Regras de qualidade
+
+- unicidade: uma linha por `cve_id` na Silver e na fato;
+- validade: CVE conforme `^CVE-\d{4}-\d{4,}$`, fornecedor, produto e data de inclusão obrigatórios;
+- integridade: integração externa auditada pela quantidade de chaves presentes em ambas as fontes;
+- conformidade: CVSS entre 0 e 10, datas convertidas para tipos próprios e ransomware restrito a Known/Unknown;
+- completude: nulos, vazios, cardinalidade, mínimo e máximo calculados por atributo;
+- rastreabilidade: URL, versão do catálogo e horário de ingestão preservados na Bronze.
+
+## Limitações semânticas
+
+`Unknown` em uso de ransomware significa ausência de confirmação no catálogo, não prova de que nunca houve uso. Contagens por fornecedor não medem insegurança relativa: são influenciadas por base instalada, quantidade de produtos, longevidade e visibilidade. Diferenças negativas entre publicação NVD e inclusão CISA são mantidas como sinal de qualidade, pois alguns identificadores receberam publicação formal no NVD depois da entrada operacional no KEV.
