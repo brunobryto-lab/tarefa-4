@@ -54,22 +54,22 @@ for period, url in URLS.items():
 # COMMAND ----------
 
 schema_raw = T.StructType([
-    T.StructField("Regiao - Sigla", T.StringType()),
-    T.StructField("Estado - Sigla", T.StringType()),
-    T.StructField("Municipio", T.StringType()),
-    T.StructField("Revenda", T.StringType()),
-    T.StructField("CNPJ da Revenda", T.StringType()),
-    T.StructField("Nome da Rua", T.StringType()),
-    T.StructField("Numero Rua", T.StringType()),
-    T.StructField("Complemento", T.StringType()),
-    T.StructField("Bairro", T.StringType()),
-    T.StructField("Cep", T.StringType()),
-    T.StructField("Produto", T.StringType()),
-    T.StructField("Data da Coleta", T.StringType()),
-    T.StructField("Valor de Venda", T.StringType()),
-    T.StructField("Valor de Compra", T.StringType()),
-    T.StructField("Unidade de Medida", T.StringType()),
-    T.StructField("Bandeira", T.StringType()),
+    T.StructField("regiao_sigla_raw", T.StringType()),
+    T.StructField("estado_sigla_raw", T.StringType()),
+    T.StructField("municipio_raw", T.StringType()),
+    T.StructField("revenda_raw", T.StringType()),
+    T.StructField("cnpj_revenda_raw", T.StringType()),
+    T.StructField("nome_rua_raw", T.StringType()),
+    T.StructField("numero_rua_raw", T.StringType()),
+    T.StructField("complemento_raw", T.StringType()),
+    T.StructField("bairro_raw", T.StringType()),
+    T.StructField("cep_raw", T.StringType()),
+    T.StructField("produto_raw", T.StringType()),
+    T.StructField("data_coleta_raw", T.StringType()),
+    T.StructField("valor_venda_raw", T.StringType()),
+    T.StructField("valor_compra_raw", T.StringType()),
+    T.StructField("unidade_medida_raw", T.StringType()),
+    T.StructField("bandeira_raw", T.StringType()),
 ])
 
 bronze_parts = []
@@ -102,16 +102,16 @@ print("Bronze:", spark.table(f"{TABLE_PREFIX}_bronze_precos").count(), "linhas")
 silver_base = (
     spark.table(f"{TABLE_PREFIX}_bronze_precos")
     .select(
-        F.upper(F.trim(F.col("Regiao - Sigla"))).alias("regiao"),
-        F.upper(F.trim(F.col("Estado - Sigla"))).alias("uf"),
-        F.upper(F.trim(F.col("Municipio"))).alias("municipio"),
-        F.sha2(F.col("CNPJ da Revenda"), 256).alias("posto_id"),
-        F.upper(F.trim(F.col("Produto"))).alias("produto"),
-        F.to_date("Data da Coleta", "dd/MM/yyyy").alias("data_coleta"),
-        F.regexp_replace("Valor de Venda", ",", ".").cast("double").alias("valor_venda"),
-        F.regexp_replace("Valor de Compra", ",", ".").cast("double").alias("valor_compra"),
-        F.upper(F.trim(F.col("Unidade de Medida"))).alias("unidade_medida"),
-        F.upper(F.trim(F.col("Bandeira"))).alias("bandeira"),
+        F.upper(F.trim(F.col("regiao_sigla_raw"))).alias("regiao"),
+        F.upper(F.trim(F.col("estado_sigla_raw"))).alias("uf"),
+        F.upper(F.trim(F.col("municipio_raw"))).alias("municipio"),
+        F.sha2(F.col("cnpj_revenda_raw"), 256).alias("posto_id"),
+        F.upper(F.trim(F.col("produto_raw"))).alias("produto"),
+        F.to_date("data_coleta_raw", "dd/MM/yyyy").alias("data_coleta"),
+        F.regexp_replace("valor_venda_raw", ",", ".").cast("double").alias("valor_venda"),
+        F.regexp_replace("valor_compra_raw", ",", ".").cast("double").alias("valor_compra"),
+        F.upper(F.trim(F.col("unidade_medida_raw"))).alias("unidade_medida"),
+        F.upper(F.trim(F.col("bandeira_raw"))).alias("bandeira"),
         "periodo_arquivo", "url_origem", "ingerido_em",
     )
     .withColumn("produto", F.translate("produto", "ÁÀÂÃÉÊÍÓÔÕÚÇ", "AAAAEEIOOOUC"))

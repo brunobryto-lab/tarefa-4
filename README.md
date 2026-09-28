@@ -156,7 +156,7 @@ python scripts/analise_local.py
 
 ## 9. Evidências
 
-As evidências locais estão em [`evidencias/`](evidencias/). As capturas da execução no Databricks comprovam a criação das tabelas, a análise de qualidade, os resultados e a persistência na nuvem. Cada imagem é descrita no [índice de evidências](evidencias/README.md).
+As evidências locais estão em [`evidencias/`](evidencias/). O [registro da execução no Databricks](evidencias/execucao_databricks.md) documenta o ambiente Serverless, a conclusão bem-sucedida, a duração e as contagens das 12 tabelas Delta relidas após a gravação. Os gráficos e o relatório de qualidade permanecem auditáveis no mesmo diretório. A captura da barra do workspace não foi publicada porque exibe o endereço de e-mail da conta.
 
 ## 10. Autoavaliação
 
@@ -177,6 +177,7 @@ Para transformar o MVP em solução contínua, seriam necessários ingestão sem
 |   `-- modelo_estrela.mmd
 |-- evidencias/
 |   |-- README.md
+|   |-- execucao_databricks.md
 |   |-- evolucao_mensal.png
 |   |-- gasolina_por_uf_2025.png
 |   `-- qualidade_por_atributo.csv
@@ -198,4 +199,3 @@ Para transformar o MVP em solução contínua, seriam necessários ingestão sem
 - Agência Nacional do Petróleo, Gás Natural e Biocombustíveis. Série Histórica de Preços de Combustíveis e de GLP.
 - Brasil. Decreto nº 8.777, de 11 de maio de 2016. Política de Dados Abertos do Poder Executivo Federal.
 - ANP. Metadados da Série Histórica de Preços de Combustíveis, atualização de 06/03/2026.
-
