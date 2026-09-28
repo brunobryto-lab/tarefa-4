@@ -1,172 +1,157 @@
-# MVP - Inteligência de preços de gasolina e etanol no Brasil
+# MVP — Priorização de vulnerabilidades exploradas
 
 **Autor:** Bruno Bryto Borges  
 **Matrícula:** 231013304  
-**Instituição:** Universidade de Brasília - Departamento de Engenharia de Produção
+**Tema:** Segurança cibernética
 
 ## Resumo executivo
 
-Este MVP constrói um pipeline de dados em nuvem para transformar a série histórica de preços de combustíveis da Agência Nacional do Petróleo, Gás Natural e Biocombustíveis (ANP) em informação útil para consumidores, gestores de frotas e analistas de custos.
+Este MVP implementa no Databricks um pipeline de dados para apoiar a priorização de vulnerabilidades realmente exploradas. A solução integra o catálogo **Known Exploited Vulnerabilities (KEV)** da CISA com os registros técnicos do **National Vulnerability Database (NVD)**, persiste as camadas Bronze, Silver e Gold em Delta Lake e produz um modelo estrela para análise.
 
-Foram processadas 1.712.267 observações brutas dos quatro semestres completos de 2024 e 2025. Após a seleção de gasolina comum e etanol, validação de domínio e deduplicação, a camada analítica contém 820.498 medições válidas, cobrindo as 27 unidades da Federação e 461 municípios.
+Na versão 2026.09.27, as duas fontes possuíam os mesmos **1.728 CVEs**, todos integrados com sucesso. O conjunto cobre **283 fornecedores** e **726 pares fornecedor–produto**. O CVSS médio é **8,41**; 907 vulnerabilidades são classificadas como altas e 626 como críticas. A CISA confirma uso conhecido em ransomware para **361 CVEs (20,89%)**.
 
-Principais achados:
+Principais conclusões:
 
-- em 2025, os maiores preços médios da gasolina foram observados no Acre (R$ 7,671/l), Amazonas (R$ 7,226/l) e Roraima (R$ 6,948/l); os menores foram Piauí (R$ 5,925/l), Amapá (R$ 6,042/l) e Paraíba (R$ 6,059/l);
-- entre janeiro de 2024 e dezembro de 2025, a média nacional da gasolina subiu 10,6%, de R$ 5,609/l para R$ 6,203/l; a do etanol subiu 22,4%, de R$ 3,702/l para R$ 4,530/l;
-- considerando a regra prática de competitividade de 70%, o etanol foi competitivo em todos os 24 meses em Mato Grosso, Mato Grosso do Sul e São Paulo;
-- a maior dispersão relativa ocorreu no etanol em São Paulo, Distrito Federal, Mato Grosso, Mato Grosso do Sul e Goiás, sugerindo maior benefício potencial da pesquisa de preços nessas localidades.
+- Microsoft concentra 389 CVEs do catálogo, seguida por Cisco (99), Apple (94), Adobe (82) e Google (75); a contagem reflete exposição e longevidade, não uma taxa de insegurança;
+- Windows é o produto mais recorrente, com 172 CVEs, dos quais 48 têm uso conhecido em ransomware;
+- as fraquezas mais frequentes são CWE-787 (164), CWE-78 (122) e CWE-416 (106);
+- a mediana do intervalo não negativo entre publicação no NVD e inclusão no KEV é 443,5 dias, evidenciando que vulnerabilidades antigas continuam sendo exploradas;
+- a janela mediana definida pela CISA para correção é de 21 dias;
+- 110 CVEs (6,37%) não possuem CWE utilizável e 228 apresentam publicação formal no NVD posterior à inclusão operacional no KEV, limitações que impedem interpretar o intervalo como tempo de resposta em todos os casos.
 
-## 1. Problema e hipótese do MVP
+## 1. Problema, hipótese e perguntas
 
-O preço dos combustíveis varia no tempo e entre localidades, afetando orçamento familiar, custo logístico e decisões de abastecimento. O problema é transformar milhões de registros de postos em respostas reproduzíveis sobre nível, tendência, competitividade e dispersão de preços.
+Equipes de segurança frequentemente recebem milhares de alertas e não conseguem corrigir tudo simultaneamente. Priorizar somente pelo CVSS ignora evidência de exploração real e uso em ransomware.
 
-**Hipótese:** um pipeline automatizado, com dados públicos persistidos em tabelas Delta, permite identificar diferenças geográficas e temporais relevantes o suficiente para apoiar decisões de abastecimento e planejamento de custos.
+**Hipótese:** combinar evidência operacional da CISA com severidade e fraquezas do NVD produz uma fila de priorização mais útil e auditável do que ordenar vulnerabilidades apenas por CVSS.
 
-### Perguntas de negócio
+As perguntas foram definidas antes da coleta:
 
-1. Quais UFs apresentaram os maiores e os menores preços médios da gasolina em 2025?
-2. Como os preços médios de gasolina e etanol evoluíram entre janeiro de 2024 e dezembro de 2025?
-3. Em quais UFs o etanol foi economicamente competitivo em relação à gasolina, usando a razão de 70% como regra de referência?
-4. Em quais combinações de UF e produto houve maior dispersão de preços, indicando maior valor potencial para pesquisa de mercado?
-5. Os dados apresentam problemas de completude, unicidade, consistência, conformidade, acurácia ou atualidade capazes de comprometer as respostas?
+1. Quais fornecedores e produtos concentram mais vulnerabilidades comprovadamente exploradas?
+2. Como as inclusões no KEV evoluíram no tempo e quanto tempo decorre entre publicação e entrada no catálogo?
+3. Quais fraquezas CWE e níveis de severidade predominam?
+4. Quais vulnerabilidades, fornecedores e fraquezas estão associados a uso conhecido em ransomware?
+5. A completude, unicidade, consistência e conformidade das fontes permitem responder às perguntas com segurança?
 
-## 2. Fonte, coleta e licença dos dados
+## 2. Fontes, coleta, licença e ética
 
-- **Fonte:** [Série Histórica de Preços de Combustíveis e de GLP - ANP](https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/serie-historica-de-precos-de-combustiveis)
-- **Arquivos:** combustíveis automotivos, 1º e 2º semestres de 2024 e 2025, em ZIP/CSV.
-- **Data da coleta deste MVP:** 28/09/2026.
-- **Volume original:** 288,9 MB em CSV; 1.712.267 registros.
-- **Formato:** CSV UTF-8, delimitado por ponto e vírgula.
-- **Licenciamento e reutilização:** a ANP publica a série como dado aberto em cumprimento ao Decreto nº 8.777/2016. A fonte deve ser atribuída e os dados não devem ser apresentados como se fossem produzidos pelo autor deste repositório.
-- **Redistribuição:** os arquivos brutos não são versionados no GitHub devido ao volume. O notebook contém as URLs oficiais e reproduz a coleta.
-- **Privacidade:** a origem inclui CNPJ e endereço de estabelecimentos, não dados pessoais de consumidores. A camada analítica exclui endereços e substitui o CNPJ por um hash SHA-256.
+| Fonte | Uso | Endpoint |
+|---|---|---|
+| CISA KEV | exploração conhecida, fornecedor, produto, prazo, ransomware e ação requerida | [JSON oficial](https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json) |
+| NVD CVE API 2.0 | publicação, estado, CVSS e CWE | [API oficial com `hasKev`](https://services.nvd.nist.gov/rest/json/cves/2.0?hasKev&resultsPerPage=2000) |
 
-## 3. Arquitetura e ferramentas
+Coleta realizada em 28/09/2026. A CISA mantém o KEV como fonte autoritativa de vulnerabilidades exploradas e recomenda seu uso na priorização de gestão de vulnerabilidades. O NVD é mantido pelo NIST e enriquece CVEs com dados técnicos padronizados. Os dados governamentais permanecem atribuídos às fontes; o código e a documentação autoral usam licença MIT.
 
-O pipeline foi implementado no Databricks com Python, PySpark, Spark SQL e Delta Lake.
+Não há dados pessoais, credenciais, telemetria interna ou informações de vítimas. O projeto utiliza apenas dados públicos sobre vulnerabilidades. As contagens por fornecedor não devem ser usadas isoladamente para rotular empresas ou produtos como “mais inseguros”, pois não há denominador de base instalada, quantidade de versões nem tempo de exposição.
+
+## 3. Arquitetura
 
 ```text
-ANP (ZIP/CSV)
-    |
-    v
-Bronze - dados originais + URL, período e horário de ingestão
-    |
-    v
-Silver - tipos corrigidos, domínios validados, CNPJ pseudonimizado e duplicatas removidas
-    |
-    v
-Gold - modelo estrela + tabelas de respostas e qualidade
-    |
-    v
-README, tabelas de resultados e evidências visuais
+CISA KEV JSON ──> Bronze CISA ──┐
+                                ├──> Silver integrada ──> Gold/Delta ──> resultados e evidências
+NVD CVE API ────> Bronze NVD ───┘
 ```
 
-As tabelas Delta usam o prefixo `tarefa_4_` no catálogo e esquema ativos do workspace. A última célula do notebook relê todas as tabelas e apresenta suas contagens, demonstrando persistência na nuvem.
+- **Bronze:** dados brutos, URL, versão e horário de ingestão;
+- **Silver:** integração por CVE, tipos corrigidos, CVSS selecionado, CWE normalizado, indicadores e validação;
+- **Gold:** modelo estrela, ponte CVE–CWE, qualidade e tabelas de resposta;
+- **Persistência:** tabelas Delta com prefixo `tarefa_4_` no catálogo e esquema ativos do Databricks.
 
 ## 4. Modelagem
 
-Foi adotado um esquema estrela:
+O modelo estrela contém:
 
-- `tarefa_4_fato_precos`: uma medição de preço por posto, produto e data;
-- `tarefa_4_dim_localidade`: região, UF e município;
-- `tarefa_4_dim_produto`: produto e unidade de medida;
-- `tarefa_4_dim_tempo`: data, ano, mês e ano-mês;
-- `tarefa_4_dim_posto`: identificador pseudonimizado e bandeira.
+- `tarefa_4_fato_vulnerabilidades`: uma linha por CVE explorado;
+- `tarefa_4_dim_fornecedor`, `tarefa_4_dim_produto` e `tarefa_4_dim_tempo`;
+- `tarefa_4_dim_cwe` e `tarefa_4_ponte_cve_cwe`, pois um CVE pode possuir mais de uma fraqueza;
+- agregações Gold de fornecedores, evolução temporal, CWEs e ransomware.
 
-O [Catálogo de Dados](catalogo/catalogo_dados.md) documenta tipos, domínios, nulabilidade e linhagem. O [diagrama do modelo](catalogo/modelo_estrela.mmd) registra as relações entre fato e dimensões.
+O [catálogo de dados](catalogo/catalogo_dados.md) documenta grão, domínios, tipos, regras e linhagem. O [diagrama Mermaid](catalogo/modelo_estrela.mmd) registra as relações.
 
-## 5. Regras de transformação e carga
+## 5. Transformações
 
-1. baixar os quatro ZIPs da página oficial da ANP;
-2. extrair e ler os CSVs com esquema explícito;
-3. registrar URL, período de origem e horário de ingestão na Bronze;
-4. padronizar textos em maiúsculas e remover acentos do nome do produto;
-5. converter `Data da Coleta` para data e valores monetários para `double`;
-6. selecionar gasolina comum e etanol;
-7. pseudonimizar o CNPJ com SHA-256 e excluir endereço e razão social da Silver;
-8. marcar como válido apenas preço entre R$ 0,50 e R$ 20,00, data válida e UF com duas letras;
-9. remover duplicatas por posto, produto, data e preço;
-10. gravar tabelas Delta Bronze, Silver, dimensões, fato, qualidade e resultados Gold.
+1. baixar os JSONs diretamente das fontes oficiais;
+2. explodir os arrays de vulnerabilidades e gravar as duas tabelas Bronze;
+3. padronizar o CVE e integrar as fontes por `cve_id`;
+4. selecionar a versão CVSS mais recente disponível: 4.0, 3.1, 3.0 ou 2.0;
+5. consolidar CWE do NVD, usando a CISA como alternativa;
+6. converter datas e derivar intervalo até o KEV, janela de correção, ano e mês;
+7. marcar ransomware somente quando o valor CISA é `Known`;
+8. validar formato do CVE, fornecedor, produto e data de inclusão;
+9. remover duplicidades por CVE e persistir dimensões, fato, ponte e agregações.
 
-Todas as escritas usam modo `overwrite` para tornar a execução idempotente: repetir o pipeline atualiza a versão sem duplicar registros.
+As escritas usam `overwrite`, tornando a execução idempotente.
 
 ## 6. Qualidade dos dados
 
-A análise foi aplicada a todos os atributos da camada Silver e está disponível em [`evidencias/qualidade_por_atributo.csv`](evidencias/qualidade_por_atributo.csv).
+A auditoria completa está em [`evidencias/qualidade_por_atributo.csv`](evidencias/qualidade_por_atributo.csv).
 
-| Dimensão | Resultado | Tratamento/efeito |
+| Dimensão | Resultado | Interpretação |
 |---|---|---|
-| Completude | `valor_compra` está 100% ausente; demais atributos analíticos sem nulos | `valor_compra` foi mantido para evidenciar a limitação, mas não é usado nas respostas |
-| Unicidade | 4 duplicatas exatas entre 820.502 registros selecionados | removidas por chave composta da medição |
-| Consistência | 27 UFs, 5 regiões e unidade única `R$ / LITRO` | regras explícitas na Silver |
-| Conformidade | 0 preços de venda fora da faixa R$ 0,50-R$ 20,00 | registros fora do domínio seriam marcados inválidos |
-| Acurácia | valores entre R$ 2,63 e R$ 9,29/l são plausíveis para o período | inspeção de extremos e estatísticas por atributo |
-| Atualidade | janela completa de 01/01/2024 a 31/12/2025 | adequada para comparar dois anos completos; não representa preços correntes de 2026 |
-
-Limitações: a pesquisa não cobre todos os postos nem todos os municípios; a composição da amostra pode variar por semana; médias simples não ponderam volume vendido; e a regra de 70% para o etanol é uma aproximação que não incorpora eficiência específica de cada veículo.
+| Completude | CVE, fornecedor, produto, datas e CVSS sem nulos | atributos essenciais completos |
+| Integração | 1.728 de 1.728 chaves presentes nas duas fontes | cobertura de 100% na coleta |
+| Unicidade | zero CVEs duplicados em ambas as fontes | chave adequada para integração |
+| CWE | 110 registros sem classificação utilizável | análises de fraqueza cobrem 93,63% |
+| Conformidade | CVSS entre 2,7 e 10; 4 severidades; formato CVE validado | domínios coerentes |
+| Consistência temporal | 228 intervalos negativos | publicação NVD não deve ser tratada sempre como início operacional |
+| Atualidade | catálogo CISA 2026.09.27 | retrato reproduzível, porém a fonte é continuamente atualizada |
 
 ## 7. Resultados e discussão
 
-### 7.1 Preço da gasolina por UF em 2025
+### 7.1 Concentração por fornecedor e produto
 
-![Preço médio da gasolina por UF em 2025](evidencias/gasolina_por_uf_2025.png)
+![Fornecedores com mais KEVs](evidencias/top_fornecedores.png)
 
-O Acre apresentou média 29,5% superior à do Piauí, diferença relevante para projeções de custo de frotas com atuação nacional. As três maiores médias concentraram-se na Região Norte, mas o Amapá aparece entre as três menores; portanto, região geográfica isoladamente não explica o resultado e decisões devem considerar cada UF.
+Microsoft aparece com 389 CVEs e 117 casos conhecidos de ransomware. Em seguida vêm Cisco (99), Apple (94), Adobe (82) e Google (75). Entre produtos, Windows soma 172 CVEs, Multiple Products da Apple 53, Chromium V8 41, Internet Explorer 36 e Flash Player 33. Esses números ajudam a dimensionar filas de correção em ambientes que usam essas tecnologias, mas não permitem comparar segurança intrínseca sem um denominador.
 
-### 7.2 Evolução mensal
+### 7.2 Evolução temporal e urgência
 
-![Evolução mensal dos preços](evidencias/evolucao_mensal.png)
+![Inclusões anuais no KEV](evidencias/evolucao_anual_kev.png)
 
-Ambos os produtos encareceram no horizonte. O etanol teve aumento proporcional maior, reduzindo parte de sua vantagem frente à gasolina fora dos estados produtores. O resultado recomenda atualização recorrente do pipeline para evitar decisões baseadas em relações históricas defasadas.
+O pico de 555 inclusões em 2022 inclui consolidação inicial do catálogo. Depois de 187 em 2023 e 186 em 2024, foram 245 em 2025 e 244 até 27/09/2026. A mediana não negativa de 443,5 dias entre publicação e inclusão mostra que vulnerabilidades antigas podem ganhar nova urgência quando surge evidência de exploração. A mediana da janela de correção é 21 dias; 1.025 CVEs receberam exatamente esse prazo.
 
-### 7.3 Competitividade do etanol
+### 7.3 Severidade e ransomware
 
-Mato Grosso, Mato Grosso do Sul e São Paulo permaneceram abaixo ou iguais à razão de 70% em todos os 24 meses. Paraná atingiu 87,5% dos meses e Goiás 66,7%. Para frotas flex nesses estados, o etanol merece ser incluído rotineiramente na decisão de abastecimento; fora deles, a comparação deve ser feita mês a mês.
+![Severidade e ransomware](evidencias/severidade_ransomware.png)
 
-### 7.4 Dispersão de preços
+Há 907 CVEs de severidade alta, 626 críticos, 191 médios e 4 baixos. Dos 361 associados a ransomware, Microsoft responde por 117, seguida por Fortinet (14), Oracle (13), SonicWall (13) e Ivanti (12). A presença de CVEs médios e até baixos no KEV reforça que evidência de exploração deve complementar o CVSS.
 
-Os maiores coeficientes de variação foram encontrados para etanol em SP (10,8%), DF (10,7%), MT (10,5%), MS (10,4%) e GO (10,4%). A dispersão indica que pesquisar posto e localização pode produzir economia maior justamente nos mercados onde o etanol também é mais relevante.
+### 7.4 Fraquezas recorrentes
 
-### 7.5 Síntese da solução
+As maiores categorias são CWE-787, escrita fora dos limites (164); CWE-78, injeção de comando no sistema operacional (122); CWE-416, uso após liberação de memória (106); CWE-20, validação imprópria de entrada (97); e CWE-22, travessia de caminho (96). Para ransomware, CWE-22 aparece em 38 CVEs, CWE-502 em 30 e CWE-787 em 29. Isso orienta práticas de desenvolvimento seguro e testes direcionados.
 
-A hipótese foi confirmada: o pipeline identifica diferenças acionáveis de nível, tendência e dispersão. Para uma frota nacional, o orçamento deve usar parâmetros por UF, e não uma média única. Para veículos flex, a razão etanol/gasolina deve ser monitorada sobretudo em MT, MS, SP, PR e GO. A solução é um MVP: orienta prioridades, mas uma implantação contínua deveria incorporar volume vendido, rotas, consumo real do veículo e atualização semanal.
+### 7.5 Síntese decisória
 
-Os resultados completos estão em [`resultados/`](resultados/), em arquivos CSV auditáveis.
+A hipótese foi confirmada. CVSS ajuda a ordenar impacto potencial, mas a priorização deve elevar CVEs com exploração confirmada, ransomware conhecido, prazo curto e presença efetiva no inventário da organização. O MVP não possui inventário de ativos; portanto, produz uma base de inteligência e não uma fila final específica para uma empresa.
 
-## 8. Como reproduzir
+## 8. Reprodução
 
 ### Databricks
 
-1. importe [`notebooks/01_pipeline_anp.py`](notebooks/01_pipeline_anp.py) no workspace;
-2. conecte o notebook a um ambiente serverless ou cluster com Spark;
+1. importe [`notebooks/01_pipeline_ciberseguranca.py`](notebooks/01_pipeline_ciberseguranca.py);
+2. conecte a um ambiente Serverless ou cluster com Spark e Delta Lake;
 3. execute todas as células;
-4. confira as tabelas `tarefa_4_*` e a tabela final de persistência;
-5. exporte ou capture as saídas necessárias para a avaliação.
+4. confira as tabelas `tarefa_4_*` e a saída final de persistência.
 
-O notebook baixa os arquivos da ANP diretamente; não é necessário enviar os CSVs ao Databricks.
+O notebook baixa as fontes automaticamente. Não é necessário enviar os JSONs manualmente.
 
 ### Validação local opcional
 
-Após baixar e extrair os quatro arquivos para `data/raw/`:
+Baixe os dois endpoints para `data/raw/cisa_kev.json` e `data/raw/nvd_kev.json`, instale as dependências e execute:
 
 ```bash
 python scripts/analise_local.py
 ```
 
-## 9. Evidências
+## 9. Evidências e resultados
 
-As evidências locais estão em [`evidencias/`](evidencias/). O [registro da execução no Databricks](evidencias/execucao_databricks.md) documenta o ambiente Serverless, a conclusão bem-sucedida, a duração e as contagens das 12 tabelas Delta relidas após a gravação. Os gráficos e o relatório de qualidade permanecem auditáveis no mesmo diretório. A captura da barra do workspace não foi publicada porque exibe o endereço de e-mail da conta.
+O diretório [`evidencias/`](evidencias/) contém três gráficos e a auditoria por atributo. O diretório [`resultados/`](resultados/) contém o conjunto integrado, agregações auditáveis e a lista de vulnerabilidades ligadas a ransomware. O notebook termina relendo todas as tabelas Delta para comprovar persistência.
 
 ## 10. Autoavaliação
 
-Todas as cinco perguntas foram respondidas. A principal dificuldade técnica foi conciliar arquivos semestrais volumosos, padronizar tipos numéricos com vírgula decimal e preservar rastreabilidade sem expor identificadores de estabelecimentos na camada analítica.
+As cinco perguntas foram respondidas e a integração apresentou cobertura total. A maior dificuldade foi harmonizar estruturas JSON aninhadas e versões distintas do CVSS. A limitação mais importante é a ausência do inventário de ativos: um CVE crítico em produto não utilizado não deve superar uma vulnerabilidade explorada presente em ativo exposto. Se o projeto fosse reiniciado, seriam incluídos CPEs instalados, criticidade do ativo, exposição à internet, EPSS e estado real da correção. Para produção, também seriam necessários execução diária, tratamento de paginação acima de 2.000 registros, testes de esquema, alertas e histórico incremental em vez de apenas retrato corrente.
 
-A limitação mais importante é amostral: preços publicados não representam necessariamente todos os postos nem ponderam vendas. Se o trabalho fosse reiniciado, seria acrescentada uma dimensão de cobertura amostral por município/semana antes de comparar médias. Também seria avaliada a regra de competitividade com dados de eficiência por modelo de veículo.
-
-Para transformar o MVP em solução contínua, seriam necessários ingestão semanal agendada, testes automáticos de esquema e qualidade, alertas de falha, painel interativo, controle de custos e monitoramento da variação da amostra.
-
-## 11. Estrutura do repositório
+## 11. Estrutura
 
 ```text
 .
@@ -177,18 +162,20 @@ Para transformar o MVP em solução contínua, seriam necessários ingestão sem
 |   `-- modelo_estrela.mmd
 |-- evidencias/
 |   |-- README.md
-|   |-- execucao_databricks.md
-|   |-- evolucao_mensal.png
-|   |-- gasolina_por_uf_2025.png
-|   `-- qualidade_por_atributo.csv
+|   |-- evolucao_anual_kev.png
+|   |-- qualidade_por_atributo.csv
+|   |-- severidade_ransomware.png
+|   `-- top_fornecedores.png
 |-- notebooks/
-|   `-- 01_pipeline_anp.py
+|   `-- 01_pipeline_ciberseguranca.py
 |-- resultados/
-|   |-- competitividade_etanol.csv
-|   |-- dispersao_estadual.csv
-|   |-- evolucao_mensal_2024_2025.csv
-|   |-- precos_estaduais_2025.csv
-|   `-- resumo.json
+|   |-- evolucao_temporal.csv
+|   |-- fornecedores.csv
+|   |-- fraquezas_cwe.csv
+|   |-- produtos.csv
+|   |-- resumo.json
+|   |-- vulnerabilidades_enriquecidas.csv
+|   `-- vulnerabilidades_ransomware.csv
 |-- scripts/
 |   `-- analise_local.py
 `-- requirements.txt
@@ -196,6 +183,8 @@ Para transformar o MVP em solução contínua, seriam necessários ingestão sem
 
 ## Referências
 
-- Agência Nacional do Petróleo, Gás Natural e Biocombustíveis. Série Histórica de Preços de Combustíveis e de GLP.
-- Brasil. Decreto nº 8.777, de 11 de maio de 2016. Política de Dados Abertos do Poder Executivo Federal.
-- ANP. Metadados da Série Histórica de Preços de Combustíveis, atualização de 06/03/2026.
+- [CISA — Known Exploited Vulnerabilities Catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
+- [CISA — Binding Operational Directive 22-01](https://www.cisa.gov/news-events/directives/bod-22-01-reducing-significant-risk-known-exploited-vulnerabilities)
+- [NVD — Vulnerabilities API](https://nvd.nist.gov/developers/vulnerabilities)
+- [FIRST — Common Vulnerability Scoring System](https://www.first.org/cvss/)
+- [MITRE — Common Weakness Enumeration](https://cwe.mitre.org/)
