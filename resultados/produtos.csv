@@ -1,5 +1,5 @@
 fornecedor,produto,vulnerabilidades,ransomware_confirmado
-Microsoft,Windows,172,48
+Microsoft,Windows,174,49
 Apple,Multiple Products,53,0
 Google,Chromium V8,41,0
 Microsoft,Internet Explorer,36,6
@@ -8,16 +8,16 @@ Linux,Kernel,31,2
 Microsoft,Office,29,3
 Microsoft,Win32k,25,11
 Microsoft,Exchange Server,17,13
+Synacor,Zimbra Collaboration Suite (ZCS),17,5
 Adobe,ColdFusion,16,3
-Synacor,Zimbra Collaboration Suite (ZCS),16,5
 Cisco,IOS and IOS XE Software,14,0
 Adobe,Acrobat and Reader,13,1
 Samsung,Mobile Devices,13,0
 Oracle,WebLogic Server,12,2
 Palo Alto Networks,PAN-OS,12,6
 Apple,"iOS, iPadOS, and macOS",11,0
+Qualcomm,Multiple Chipsets,11,0
 Microsoft,SharePoint,10,5
-Qualcomm,Multiple Chipsets,10,0
 SAP,NetWeaver,10,2
 Fortinet,FortiOS,9,6
 VMware,vCenter Server,9,3
@@ -45,6 +45,7 @@ Apple,iOS and iPadOS,5,0
 Cisco,"Small Business RV160, RV260, RV340, and RV345 Series Routers",5,0
 Citrix,NetScaler,5,0
 Citrix,NetScaler ADC and NetScaler Gateway,5,2
+Ivanti,Endpoint Manager (EPM),5,0
 Langflow,Langflow,5,1
 Microsoft,Defender,5,2
 Microsoft,SharePoint Server,5,3
@@ -67,7 +68,6 @@ ConnectWise,ScreenConnect,4,2
 Craft CMS,Craft CMS,4,0
 Fortinet,FortiOS and FortiProxy,4,4
 GIGABYTE,Multiple Products,4,4
-Ivanti,Endpoint Manager (EPM),4,0
 JFrog,Artifactory,4,0
 JetBrains,TeamCity,4,4
 Microsoft,Open Management Infrastructure (OMI),4,1
@@ -80,7 +80,7 @@ QNAP,Network Attached Storage (NAS),4,4
 QNAP,Photo Station,4,4
 RARLAB,WinRAR,4,3
 Roundcube,Roundcube Webmail,4,0
-SimpleHelp ,SimpleHelp,4,3
+SimpleHelp,SimpleHelp,4,3
 SolarWinds,Serv-U,4,1
 Veeam,Backup & Replication,4,4
 Android,Kernel,3,0
@@ -114,6 +114,7 @@ Palo Alto Networks,Expedition,3,0
 Qlik,Sense,3,3
 Rails,Ruby on Rails,3,0
 SaltStack,Salt,3,0
+Sangoma,FreePBX,3,0
 SmarterTools,SmarterMail,3,3
 SonicWall,SonicOS,3,3
 SonicWall,SonicWall Email Security,3,3
@@ -123,6 +124,7 @@ VMware,ESXi,3,3
 VMware,Multiple Products,3,0
 Veritas,Backup Exec Agent,3,3
 WordPress,Core,3,0
+Adobe,Commerce and Magento,2,0
 Adobe,Commerce and Magento Open Source,2,0
 Adobe,Flash Player and AIR,2,0
 Advantive,VeraCore,2,0
@@ -135,6 +137,7 @@ Arista,VeloCloud Orchestrator,2,0
 Arm,Mali GPU Kernel Driver,2,0
 Atlassian,Confluence Server and Data Center,2,1
 Atlassian,Jira Server and Data Center,2,0
+BeyondTrust,Privileged Remote Access (PRA) and Remote Support (RS),2,0
 CWP,Control Web Panel,2,0
 Check Point,Multiple Products,2,0
 Cisco,AnyConnect Secure,2,2
@@ -190,7 +193,6 @@ Microsoft,PowerPoint,2,0
 Microsoft,SMBv1,2,2
 Microsoft,SMBv1 server,2,2
 Microsoft,SQL Server,2,1
-Microsoft,Windows ,2,1
 Microsoft,XML Core Services,2,0
 MinIO,MinIO,2,0
 Mitel,MiCollab,2,2
@@ -206,7 +208,6 @@ Progress,WhatsUp Gold,2,1
 Red Hat,JBoss,2,2
 Red Hat,Polkit,2,1
 Samsung,MagicINFO 9 Server,2,0
-Sangoma,FreePBX,2,0
 ServiceNow,"Utah, Vancouver, and Washington DC Now Platform",2,0
 Sitecore,CMS and Experience Platform (XP),2,0
 SonicWall,SMA100,2,1
@@ -241,8 +242,6 @@ Adminer,Adminer,1,0
 Adobe,Acrobat,1,0
 Adobe,"Acrobat and Reader, Flash Player",1,0
 Adobe,BlazeDS,1,1
-Adobe,Commerce and Magento,1,0
-Adobe,Commerce and Magento ,1,0
 Adobe,Commerce and Magento,1,0
 Adobe,Experience Manager (AEM) Forms,1,0
 Adobe,Reader,1,0
@@ -270,8 +269,8 @@ Arcadyan,Buffalo Firmware,1,0
 Arcserve,Unified Data Protection (UDP),1,0
 Arista,Extensible Operating System,1,0
 Arm,Trusted Firmware,1,0
-Array Networks ,AG/vxAG ArrayOS,1,1
-Array Networks ,ArrayOS AG,1,0
+Array Networks,AG/vxAG ArrayOS,1,1
+Array Networks,ArrayOS AG,1,0
 Artifex,Ghostscript,1,0
 Atlassian,Bitbucket Server and Data Center,1,0
 Atlassian,Confluence,1,0
@@ -285,8 +284,6 @@ Aviatrix,Controllers,1,0
 BQE,BillQuick Web Suite,1,1
 Balbooa,Forms,1,0
 Barracuda Networks,Email Security Gateway (ESG) Appliance,1,0
-BeyondTrust,Privileged Remote Access (PRA) and Remote Support (RS),1,0
-BeyondTrust,Privileged Remote Access (PRA) and Remote Support (RS) ,1,0
 BeyondTrust,Remote Support (RS) and Privileged Remote Access (PRA),1,1
 Broadcom,Brocade Fabric OS,1,0
 Broadcom,VMware Aria Operations,1,0
@@ -316,7 +313,7 @@ Cisco,RV Series Routers,1,0
 Cisco,SD-WAN,1,0
 Cisco,Secure Access Control System (ACS),1,0
 Cisco,Secure Email Gateway,1,0
-Cisco,Secure Firewall Adaptive Security Appliance (ASA) and Secure Firewall Threat Defense (FTD) ,1,0
+Cisco,Secure Firewall Adaptive Security Appliance (ASA) and Secure Firewall Threat Defense (FTD),1,0
 Cisco,Secure Firewall Management Center (FMC) and Security Cloud Control (SCC) Firewall Management,1,0
 Cisco,Small Business RV Series Routers,1,0
 Cisco,Small Business RV320 and RV325 Dual Gigabit WAN VPN Routers,1,0
@@ -425,7 +422,6 @@ Ignite Realtime,Openfire,1,0
 InduSoft,Web Studio,1,0
 Intel,"Active Management Technology (AMT), Small Business Technology (SBT), and Standard Manageability",1,0
 Intel,Ethernet Diagnostics Driver for Windows,1,1
-Ivanti, Endpoint Manager (EPM),1,0
 Ivanti,Cloud Services Appliance,1,0
 Ivanti,"Connect Secure, Policy Secure, and Neurons",1,1
 Ivanti,Endpoint Manager Cloud Service Appliance (EPM CSA),1,1
@@ -444,7 +440,7 @@ JoomShaper,SP Page Builder,1,0
 Joomla!,Joomla!,1,0
 Joomlack,Page Builder,1,0
 Juniper,ScreenOS,1,0
-Justice AV Solutions,Viewer ,1,0
+Justice AV Solutions,Viewer,1,0
 KNX Association,KNX Protocol Connection Authorization Option 1,1,0
 Kentico,Kentico Xperience,1,0
 Kentico,Xperience,1,0
@@ -509,7 +505,7 @@ Microsoft,Task Scheduler,1,1
 Microsoft,Update Notification Manager,1,1
 Microsoft,Visual Basic for Applications (VBA),1,0
 Microsoft,WinVerifyTrust function,1,0
-Microsoft,Windows Ancillary Function Driver for WinSock ,1,0
+Microsoft,Windows Ancillary Function Driver for WinSock,1,0
 Microsoft,Windows CNG Key Isolation Service,1,0
 Microsoft,Windows COM+ Event System Service,1,0
 Microsoft,WordPad,1,0
@@ -545,7 +541,6 @@ October CMS,October CMS,1,0
 Omnissa,Workspace One UEM,1,0
 OpenBSD,OpenSMTPD,1,0
 OpenSSL,OpenSSL,1,0
-Oracle, PeopleSoft Enterprise PeopleTools,1,1
 Oracle,ADF Faces,1,0
 Oracle,BI Publisher (Formerly XML Publisher),1,0
 Oracle,HTTP Server and Oracle Weblogic Server Proxy Plug-in,1,0
@@ -553,6 +548,7 @@ Oracle,Intelligence Enterprise Edition,1,0
 Oracle,Java SE JDK and JRE,1,0
 Oracle,Java SE and JRockit,1,0
 Oracle,Multiple Products,1,0
+Oracle,PeopleSoft Enterprise PeopleTools,1,1
 Oracle,Solaris,1,0
 Oracle,Solaris and Zettabyte File System (ZFS),1,0
 Oracle,VirtualBox,1,0
@@ -582,7 +578,6 @@ QNAP,QNAP Network-Attached Storage (NAS),1,0
 QNAP,QTS,1,1
 QNAP,VioStor NVR,1,0
 QNAP Systems,Helpdesk,1,0
-Qualcomm,Multiple Chipsets ,1,0
 Qualcomm,"Snapdragon Auto, Snapdragon Compute, Snapdragon Connectivity, Snapdragon Consumer IOT, Snapdragon Industrial IOT, Snapdragon Mobile, Snapdragon Voice & Music, Snapdragon Wearables",1,0
 Qualitia,Active! Mail,1,0
 Quest,KACE System Management Appliance,1,1
@@ -612,7 +607,6 @@ SAP,Solution Manager,1,0
 SIMalliance,Toolbox Browser,1,0
 SKYSEA,Client View,1,0
 Samba,Samba,1,1
-Sangoma,FreePBX ,1,0
 Sangoma,Switchvox,1,0
 Schneider Electric,U.motion Builder,1,0
 ScienceLogic,SL1,1,0
@@ -643,7 +637,6 @@ SugarCRM,Multiple Products,1,0
 Sumavision,Enhanced Multimedia Router (EMR),1,0
 Sunhillo,SureLine,1,0
 Symantec,Symantec Messaging Gateway,1,0
-Synacor, Zimbra Collaboration Suite (ZCS),1,0
 Synacor,Zimbra Collaborate Suite (ZCS),1,1
 Synacor,Zimbra Collaboration Suite,1,0
 SysAid,SysAid Server,1,1
@@ -699,7 +692,7 @@ WebKitGTK,WebKitGTK,1,0
 WebPros,cPanel & WHM and WP2 (WordPress Squared),1,1
 WebRTC,WebRTC,1,1
 Webmin,Webmin,1,1
-Widget Factory,Joomla Content Editor ,1,0
+Widget Factory,Joomla Content Editor,1,0
 WordPress,File Manager Plugin,1,0
 WordPress,Snap Creek Duplicator Plugin,1,0
 WordPress,Social Warfare Plugin,1,0

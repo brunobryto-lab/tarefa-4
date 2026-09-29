@@ -91,6 +91,8 @@ def main() -> None:
 
     cisa_df = pd.DataFrame(cisa_rows)
     nvd_df = pd.DataFrame(nvd_rows)
+    cisa_df["fornecedor"] = cisa_df["fornecedor"].str.strip()
+    cisa_df["produto"] = cisa_df["produto"].str.strip()
     merged = cisa_df.merge(nvd_df, on="cve_id", how="outer", indicator=True)
 
     merged["data_adicao"] = pd.to_datetime(merged["data_adicao"], errors="coerce")

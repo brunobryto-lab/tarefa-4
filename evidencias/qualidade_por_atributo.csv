@@ -1,7 +1,7 @@
 atributo,tipo,linhas,nulos,percentual_nulos,distintos,minimo,maximo
 cve_id,str,1728,0,0.0,1728,CVE-2002-0367,CVE-2026-9586
 fornecedor,str,1728,0,0.0,283,7-Zip,vBulletin
-produto,str,1728,0,0.0,697, Endpoint Manager (EPM),vRealize Operations Manager API
+produto,str,1728,0,0.0,690,.NET Core and Visual Studio,vRealize Operations Manager API
 data_publicacao,datetime64[us],1728,0,0.0,1728,2002-06-25 04:00:00,2026-09-27 17:16:56.390000
 data_adicao,datetime64[us],1728,0,0.0,477,2021-11-03 00:00:00,2026-09-27 00:00:00
 data_limite,datetime64[us],1728,0,0.0,500,2021-11-17 00:00:00,2026-09-30 00:00:00

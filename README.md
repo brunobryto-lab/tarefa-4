@@ -8,7 +8,7 @@
 
 Este MVP implementa no Databricks um pipeline de dados para apoiar a priorização de vulnerabilidades realmente exploradas. A solução integra o catálogo **Known Exploited Vulnerabilities (KEV)** da CISA com os registros técnicos do **National Vulnerability Database (NVD)**, persiste as camadas Bronze, Silver e Gold em Delta Lake e produz um modelo estrela para análise.
 
-Na versão 2026.09.27, as duas fontes possuíam os mesmos **1.728 CVEs**, todos integrados com sucesso. O conjunto cobre **283 fornecedores** e **726 pares fornecedor–produto**. O CVSS médio é **8,41**; 907 vulnerabilidades são classificadas como altas e 626 como críticas. A CISA confirma uso conhecido em ransomware para **361 CVEs (20,89%)**.
+Na versão 2026.09.27, as duas fontes possuíam os mesmos **1.728 CVEs**, todos integrados com sucesso. O conjunto cobre **283 fornecedores** e **719 pares fornecedor–produto normalizados**. O CVSS médio é **8,41**; 907 vulnerabilidades são classificadas como altas e 626 como críticas. A CISA confirma uso conhecido em ransomware para **361 CVEs (20,89%)**.
 
 Principais conclusões:
 
@@ -145,7 +145,7 @@ python scripts/analise_local.py
 
 ## 9. Evidências e resultados
 
-O diretório [`evidencias/`](evidencias/) contém três gráficos e a auditoria por atributo. O diretório [`resultados/`](resultados/) contém o conjunto integrado, agregações auditáveis e a lista de vulnerabilidades ligadas a ransomware. O notebook termina relendo todas as tabelas Delta para comprovar persistência.
+O diretório [`evidencias/`](evidencias/) contém três gráficos, a auditoria por atributo e o [registro da execução no Databricks](evidencias/execucao_databricks.md). O diretório [`resultados/`](resultados/) contém o conjunto integrado, agregações auditáveis e a lista de vulnerabilidades ligadas a ransomware. O notebook termina relendo todas as tabelas Delta para comprovar persistência.
 
 ## 10. Autoavaliação
 
@@ -162,6 +162,7 @@ As cinco perguntas foram respondidas e a integração apresentou cobertura total
 |   `-- modelo_estrela.mmd
 |-- evidencias/
 |   |-- README.md
+|   |-- execucao_databricks.md
 |   |-- evolucao_anual_kev.png
 |   |-- qualidade_por_atributo.csv
 |   |-- severidade_ransomware.png
