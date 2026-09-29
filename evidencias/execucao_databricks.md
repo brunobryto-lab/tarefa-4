@@ -3,9 +3,10 @@
 - **Notebook:** `tarefa-4-ciberseguranca-kev`
 - **Ambiente:** Databricks Free Edition, computação Serverless
 - **Catálogo e esquema:** `workspace.default`
-- **Data da execução:** 28/09/2026
-- **Tempo exibido:** 2 min 55 s
+- **Data da execução:** 29/09/2026
+- **Tempo exibido:** 4 min 02 s
 - **Resultado:** célula concluída com sucesso; 1.728 registros CISA, 1.728 registros NVD, 1.728 integrados e 1.728 válidos.
+- **Validação da auditoria:** intervalo CVSS de 2,7 a 10,0 e listas CWE vazias contabilizadas como ausência (`cwes_cisa`: 175; `cwes_nvd`: 203).
 
 O bloco final releu cada tabela do catálogo depois da gravação e apresentou estas contagens:
 
