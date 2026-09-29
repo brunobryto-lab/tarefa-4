@@ -232,12 +232,19 @@ for name, frame in {
 quality_rows = []
 for field in valid.schema.fields:
     column = field.name
+    type_name = field.dataType.typeName()
+    missing = F.col(column).isNull()
+    if type_name == "array":
+        missing = missing | (F.size(F.col(column)) == 0)
+    elif type_name == "string":
+        missing = missing | (F.trim(F.col(column)) == "")
+    order_column = F.col(column).cast("string") if type_name in {"array", "map", "struct"} else F.col(column)
     stats = valid.agg(
         F.count("*").alias("linhas"),
-        F.sum(F.col(column).isNull().cast("int")).alias("nulos"),
+        F.sum(missing.cast("int")).alias("nulos"),
         F.countDistinct(F.col(column).cast("string")).alias("distintos"),
-        F.min(F.col(column).cast("string")).alias("minimo"),
-        F.max(F.col(column).cast("string")).alias("maximo"),
+        F.min(order_column).cast("string").alias("minimo"),
+        F.max(order_column).cast("string").alias("maximo"),
     ).withColumn("atributo", F.lit(column)).withColumn("tipo", F.lit(field.dataType.simpleString()))
     quality_rows.append(stats)
 
