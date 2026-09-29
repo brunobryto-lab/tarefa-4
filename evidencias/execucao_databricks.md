@@ -8,6 +8,8 @@
 - **Resultado:** célula concluída com sucesso; 1.728 registros CISA, 1.728 registros NVD, 1.728 integrados e 1.728 válidos.
 - **Validação da auditoria:** intervalo CVSS de 2,7 a 10,0 e listas CWE vazias contabilizadas como ausência (`cwes_cisa`: 175; `cwes_nvd`: 203).
 
+![Execução concluída e auditoria de qualidade](databricks_execucao_concluida.png)
+
 O bloco final releu cada tabela do catálogo depois da gravação e apresentou estas contagens:
 
 | Tabela Delta | Linhas persistidas |
@@ -26,5 +28,7 @@ O bloco final releu cada tabela do catálogo depois da gravação e apresentou e
 | `tarefa_4_evolucao_temporal` | 59 |
 | `tarefa_4_fraquezas_cwe` | 190 |
 | `tarefa_4_ransomware` | 361 |
+
+![Contagem das tabelas Delta persistidas](databricks_tabelas_persistidas.png)
 
 As tabelas antigas do tema ANP foram removidas no início do pipeline. O código usa `overwrite` com esquema atualizado nas camadas reconstruídas, de modo que novas execuções sejam idempotentes.

@@ -145,7 +145,15 @@ python scripts/analise_local.py
 
 ## 9. Evidências e resultados
 
-O diretório [`evidencias/`](evidencias/) contém três gráficos, a auditoria por atributo e o [registro da execução no Databricks](evidencias/execucao_databricks.md). O diretório [`resultados/`](resultados/) contém o conjunto integrado, agregações auditáveis e a lista de vulnerabilidades ligadas a ransomware. O notebook termina relendo todas as tabelas Delta para comprovar persistência.
+O diretório [`evidencias/`](evidencias/) contém três gráficos, a auditoria por atributo, capturas legíveis da execução na nuvem e o [registro da execução no Databricks](evidencias/execucao_databricks.md). O diretório [`resultados/`](resultados/) contém o conjunto integrado, agregações auditáveis e a lista de vulnerabilidades ligadas a ransomware. O notebook termina relendo todas as tabelas Delta para comprovar persistência. A [auditoria final](evidencias/auditoria_final.md) relaciona cada exigência do enunciado à respectiva evidência.
+
+### Execução no Databricks
+
+![Execução concluída e auditoria de qualidade no Databricks](evidencias/databricks_execucao_concluida.png)
+
+### Persistência das tabelas Delta
+
+![Contagem das tabelas Delta persistidas](evidencias/databricks_tabelas_persistidas.png)
 
 ## 10. Autoavaliação
 
@@ -162,6 +170,9 @@ As cinco perguntas foram respondidas e a integração apresentou cobertura total
 |   `-- modelo_estrela.mmd
 |-- evidencias/
 |   |-- README.md
+|   |-- auditoria_final.md
+|   |-- databricks_execucao_concluida.png
+|   |-- databricks_tabelas_persistidas.png
 |   |-- execucao_databricks.md
 |   |-- evolucao_anual_kev.png
 |   |-- qualidade_por_atributo.csv
