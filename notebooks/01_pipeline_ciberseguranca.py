@@ -146,7 +146,12 @@ silver = (
     .withColumn(
         "cwes",
         F.when(F.size("cwes_nvd") > 0, F.array_distinct("cwes_nvd"))
-        .otherwise(F.split(F.regexp_replace(F.coalesce("cwes_cisa", F.lit("")), r"[\[\]'\"]", ""), r"\s*,\s*")),
+        .otherwise(
+            F.split(
+                F.regexp_replace(F.coalesce(F.col("cwes_cisa").cast("string"), F.lit("")), r"[\[\]'\"]", ""),
+                r"\s*,\s*",
+            )
+        ),
     )
     .withColumn("ransomware_confirmado", F.upper("uso_ransomware") == F.lit("KNOWN"))
     .withColumn("dias_publicacao_ate_kev", F.datediff("data_adicao", F.to_date("data_publicacao")))
