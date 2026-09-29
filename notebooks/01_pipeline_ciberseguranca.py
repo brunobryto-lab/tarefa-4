@@ -123,7 +123,11 @@ nvd_silver = bronze_nvd.select(
 
 silver = (
     cisa_silver.join(nvd_silver, "cve_id", "full")
-    .withColumn("cwes", F.when(F.size("cwes_nvd") > 0, F.array_distinct("cwes_nvd")).otherwise("cwes_cisa"))
+    .withColumn(
+        "cwes",
+        F.when(F.size("cwes_nvd") > 0, F.array_distinct("cwes_nvd"))
+        .otherwise(F.split(F.regexp_replace(F.coalesce("cwes_cisa", F.lit("")), r"[\[\]'\"]", ""), r"\s*,\s*")),
+    )
     .withColumn("ransomware_confirmado", F.upper("uso_ransomware") == F.lit("KNOWN"))
     .withColumn("dias_publicacao_ate_kev", F.datediff("data_adicao", F.to_date("data_publicacao")))
     .withColumn("janela_correcao_dias", F.datediff("data_limite", "data_adicao"))
