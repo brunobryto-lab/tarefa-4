@@ -19,6 +19,26 @@ TABLE_PREFIX = "tarefa_4"
 
 catalog = spark.sql("SELECT current_catalog()").first()[0]
 schema = spark.sql("SELECT current_schema()").first()[0]
+
+# Remove somente as tabelas conhecidas da versao anterior do projeto (tema ANP).
+# As tabelas compartilhadas de dimensao/qualidade serao recriadas abaixo.
+legacy_tables = [
+    "bronze_precos",
+    "silver_precos",
+    "dim_localidade",
+    "dim_produto",
+    "dim_tempo",
+    "dim_posto",
+    "fato_precos",
+    "qualidade",
+    "precos_uf_2025",
+    "evolucao_mensal",
+    "competitividade_etanol",
+    "dispersao",
+]
+for legacy_name in legacy_tables:
+    spark.sql(f"DROP TABLE IF EXISTS `{catalog}`.`{schema}`.`{TABLE_PREFIX}_{legacy_name}`")
+
 spark.sql(f"CREATE VOLUME IF NOT EXISTS `{catalog}`.`{schema}`.`{TABLE_PREFIX}_files`")
 raw_dir = Path(f"/Volumes/{catalog}/{schema}/{TABLE_PREFIX}_files/ciberseguranca")
 raw_dir.mkdir(parents=True, exist_ok=True)
